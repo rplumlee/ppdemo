@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Parallax } from 'react-parallax';
 import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider, unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core/styles';
 
 import './App.css';
 
@@ -129,7 +129,7 @@ const initialItems = [
     itemPrice: 15.95,
     itemDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     imgUrl: "https://ohsheglows.com/gs_images/2020/05/IMG_5643-256x256.jpg",
-    id: 7,
+    id: 8,
     gf: false,
     v: false,
     featured: false
@@ -255,7 +255,7 @@ function App() {
     
     return sections.map((section, index) => {
       return (
-        <motion.div key={index} variants={variants}>
+        <motion.div key={section.order} variants={variants}>
           <h2 style={{textAlign: "left", marginLeft: 15, marginBottom: 5}}>{section.name}</h2>
           <div className="grid">
           {items.map((item, index) => {
