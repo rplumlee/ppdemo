@@ -1,6 +1,6 @@
 {
   "name": "my-app",
-  "homepage": "http://rplumlee.github.io/ppdemo/",
+  "homepage": "https://rplumlee.github.io/ppdemo/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
