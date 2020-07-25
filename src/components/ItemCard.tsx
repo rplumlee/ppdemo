@@ -63,59 +63,57 @@ const useStyles = makeStyles({
 
   const wrapperVariant = {
     normal: {
-      top: "calc(50vh - 50%)",
-      left: "calc(50vw - 50%)",
-      width: 280,
-      scale: 1,
+      top: "calc(50vh)",
+      left: "calc(50vw)",
+      width: [280, 280],
+      scale: [.7,1],
       height: "auto",
-      translateY: "0%",
-      translateX: "0%",
+      translateY: ["20%", "0%"],
+      translateX: ["0%", "0%"],
       zIndex: 20,
       transition: {
         duration: .3,
-        delay: 0
+        delay: 0,
+        times: [0,.7]
       }
     },
     expanded: {
-        scale:1,
-        top: "50vh",
+        scale: [.3, 1],
+        top: "42vh",
         left: "50vw",
         zIndex: 50,
-        translateY: "-50%",
-        translateX: "-50%",
-        width: "auto",
+        translateY: ["-60%", "-50%"],
+        translateX: ["-50%", "-50%"],
+        width: [550, 550],
         height: "auto",
         transition: { 
             duration: .3,
             delay: 0,
+            times: [0,.7]
         }
-    } 
+    }
   }
 
   const overlayVariant = {
     hidden: {
       top: "0",
       left: "0",
-      height: 0,
-      width: 0,
+      height: "0vh",
+      width: "0vh",
       zIndex: 9,
       overflow: "hidden",
       content: "",
       background: "rgba(0,0,0,.7)",
       transition: {
-        duration: 0,
-        delay: 0
+        duration: 0
       }
     },
     show: {
         zIndex: 49,
         height: "100vh",
         width: "100vw",
-        left: "0",
-        top: 0,
         transition: { 
-        duration: .3,
-        delay: 0
+            duration :0
         }
     } 
   }
@@ -160,7 +158,7 @@ export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDelet
 
 
     return(
-        <div style={demoCard ? {} : {width: 280, minHeight: 310}}>
+        <div className={demoCard ? "" : "card-placeholder"}>
             <form onSubmit={updateApp}>
             
             <motion.div variants={overlayVariant} initial={"hidden"} style={{position: "fixed"}}  animate={expanded ? "show" : "hidden"} onClick={() => setExpanded(false)}></motion.div>
@@ -187,7 +185,7 @@ export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDelet
                             <span>
                                 {expanded 
                                     ? 
-                                    <TextField value={itemState.itemDescription} name="itemDescription" multiline rows={3} onChange={updateState} label="Description" variant="standard" />
+                                    <TextField value={itemState.itemDescription} name="itemDescription" multiline rows={4} onChange={updateState} label="Description" variant="standard" style={{marginBottom:12}}/>
                                     : 
                                     demoCard ? item.itemDescription : itemState.itemDescription
                                 }
@@ -271,17 +269,17 @@ export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDelet
                     <CardActions>
                         {expanded 
                                 ? 
-                                <span style={{margin: "0 10px 10px 10px", height: 48, alignItems: "center", display: "flex", justifyContent: "space-between", width: "100%"}}>
+                                <span style={{margin: "10px 0 0 0", height: 48, alignItems: "center", display: "flex", justifyContent: "space-between", width: "100%"}}>
                                     <Fab  type="submit" variant="extended" color="primary">
-                                        <span style={{marginLeft:7, fontSize: "1.1em"}}>Confirm edits</span>
+                                        <span style={{fontSize: "1.1em"}}>Confirm<span className="hidden-sm"> edits</span></span>
                                     </Fab>
                                     <a style={{display: "inline-flex", marginRight: 0, cursor: "pointer", marginLeft: 20}} onClick={closeCard}>
                                         <ClearIcon />
-                                        <span style={{marginLeft:7, fontSize: "1.1em"}}>Cancel</span>
+                                        <span>Cancel</span>
                                     </a>
                                     <a style={{display: "inline-flex",  cursor: "pointer"}} onClick={deleteItem}>
                                         <DeleteIcon />
-                                        <span style={{marginLeft:7, fontSize: "1.1em"}}>Delete Item</span>
+                                        <span>Delete<span className="hidden-sm"> Item</span></span>
                                     </a>
                                 </span>
                                 : 

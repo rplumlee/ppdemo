@@ -256,12 +256,12 @@ function App() {
     return sections.map((section, index) => {
       return (
         <motion.div key={section.order} variants={variants}>
-          <h2 style={{textAlign: "left", marginLeft: 15, marginBottom: 5}}>{section.name}</h2>
+          <h2 style={{position:"relative",textAlign: "left", marginLeft: 15, marginBottom: 5}}>{section.name}<span className="section-underline"></span></h2>
           <div className="grid">
           {items.map((item, index) => {
             if(item.section == section.name){
               
-              return <motion.div key={item.id} style={{display: "inline-flex"}} variants={variants}><ItemCard item={item} sections={sections} handleDeleteItem={(item) => { dispatchItems({ type: "remove", item: item}) }} handleEditItem={(item) => { dispatchItems({ type: "update", item: item}) }} demoCard={false} /></motion.div>;
+              return <motion.div key={item.id} style={{display: "inline-flex"}} variants={variants} className="app-card-container"><ItemCard item={item} sections={sections} handleDeleteItem={(item) => { dispatchItems({ type: "remove", item: item}) }} handleEditItem={(item) => { dispatchItems({ type: "update", item: item}) }} demoCard={false} /></motion.div>;
             }
                      })}</div>
         </motion.div>
