@@ -177,7 +177,7 @@ export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDelet
                         <CardContent>
                         <div className="card-title">
                             {expanded ? 
-                                <h5 style={{margin: "0px 0px 5px 0px"}}><TextField value={itemState.itemName} name="itemName" onChange={updateState} label="Name" variant="outlined" /><small><TextField value={itemState.itemPrice ? itemState.itemPrice : ""} name="itemPrice" onChange={updateState} label="Price" variant="outlined" /></small></h5>
+                                <h5 style={{margin: "0px 0px 5px 0px"}}><TextField value={itemState.itemName} name="itemName" onChange={updateState} label="Name" variant="standard" /><small><TextField value={itemState.itemPrice ? itemState.itemPrice : ""} name="itemPrice" onChange={updateState} label="Price" variant="standard" /></small></h5>
                                 : 
                                 <h5 style={{margin: "0px 0px 5px 0px"}}>{demoCard ? item.itemName : itemState.itemName} <small>{itemState.itemPrice ? "$" : ""}{demoCard ? item.itemPrice : itemState.itemPrice}</small></h5>
                             }
@@ -187,7 +187,7 @@ export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDelet
                             <span>
                                 {expanded 
                                     ? 
-                                    <TextField value={itemState.itemDescription} name="itemDescription" multiline rows={3} onChange={updateState} label="Description" variant="outlined" />
+                                    <TextField value={itemState.itemDescription} name="itemDescription" multiline rows={3} onChange={updateState} label="Description" variant="standard" />
                                     : 
                                     demoCard ? item.itemDescription : itemState.itemDescription
                                 }
@@ -202,7 +202,7 @@ export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDelet
                                                 value={itemState.section}
                                                 onChange={updateState}
                                                 name="section"
-                                                variant="outlined"
+                                                variant="standard"
                                             >
                                                 {sections.map((section, index) => {
                                                     return <MenuItem value={section.name} key={index}>{section.name}</MenuItem> 
@@ -272,17 +272,16 @@ export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDelet
                         {expanded 
                                 ? 
                                 <span style={{margin: "0 10px 10px 10px", height: 48, alignItems: "center", display: "flex", justifyContent: "space-between", width: "100%"}}>
-                                    <Fab  type="submit" variant="extended" color="primary" style={{marginRight: 20}}>
-                                        <DoneIcon />
+                                    <Fab  type="submit" variant="extended" color="primary">
                                         <span style={{marginLeft:7, fontSize: "1.1em"}}>Confirm edits</span>
                                     </Fab>
-                                    <a style={{display: "inline-flex", marginRight: 20, cursor: "pointer"}} onClick={closeCard}>
+                                    <a style={{display: "inline-flex", marginRight: 0, cursor: "pointer", marginLeft: 20}} onClick={closeCard}>
                                         <ClearIcon />
                                         <span style={{marginLeft:7, fontSize: "1.1em"}}>Cancel</span>
                                     </a>
-                                    <a style={{display: "inline-flex", color: "#B22222", cursor: "pointer"}} onClick={deleteItem}>
+                                    <a style={{display: "inline-flex",  cursor: "pointer"}} onClick={deleteItem}>
                                         <DeleteIcon />
-                                        <span style={{marginLeft:7, fontSize: "1.1em"}}>Delete</span>
+                                        <span style={{marginLeft:7, fontSize: "1.1em"}}>Delete Item</span>
                                     </a>
                                 </span>
                                 : 

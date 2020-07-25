@@ -99,7 +99,7 @@ export const AddSection: React.FC<Props> = ({handleChangeSection, shown, section
                     <form onSubmit={updateApp}>
                         <div className="add-to-menu">
                             <motion.div className="form" variants={variants} animate={shown ? "shown" : "hidden"}>
-                                <motion.div variants={variants} className="section-name"><TextField value={section.name} name="name" onChange={updateState} label="Name" variant="outlined" /></motion.div>
+                                <motion.div variants={variants} className="section-name"><TextField value={section.name} name="name" onChange={updateState} label="Name" variant="standard" /></motion.div>
                                 <motion.div variants={variants} className="section-position">
                                     <FormControl>
                                         <InputLabel id="demo-simple-select-label">Position</InputLabel>
@@ -109,7 +109,7 @@ export const AddSection: React.FC<Props> = ({handleChangeSection, shown, section
                                             value={section.order}
                                             onChange={updateState}
                                             name="order"
-                                            variant="outlined"
+                                            variant="standard"
                                         >
                                             {sections.map((section, index) => {
                                                 return <MenuItem value={index + 1} key={index}>{index + 1}</MenuItem> 

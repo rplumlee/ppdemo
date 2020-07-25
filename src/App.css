@@ -227,12 +227,12 @@ h3.title{
   width: 100%;
 }
 #demo-simple-select-label{
-  margin-left: 9px;
-  padding: 2px 5px;
-  margin-top: -3px;
+
+
   background: #fff;
   z-index: 10;
 }
+
 
 .add-to-menu .MuiInputBase-root{
   width: 100%;
@@ -268,6 +268,23 @@ body .add-to-menu .section-position{
 
 .add-to-menu .MuiCardActions-root{
   display: none;
+}
+.MuiButtonBase-root.MuiFab-root{
+  box-shadow: none;
+}
+.MuiCardActions-root a
+{
+  font-size: .8rem;
+  display: inline-flex;
+  padding: 9px 10px;
+  border-radius: 19px;
+}
+.MuiCardActions-root a:hover
+{
+  background: #f5f5f5;
+}
+.MuiCardActions-root a svg{
+  font-size: 1.3rem;
 }
 
 body{

@@ -125,8 +125,8 @@ export const AddItem: React.FC<Props> = ({handleChangeItem, shown, sections, han
                             <motion.div className="form" variants={variants} animate={shown ? "shown" : "hidden"}>
                                 
                                 <div style={{paddingRight: 30, maxWidth: 450}}>
-                                <motion.div variants={variants} style={{width: "calc(70% - 30px)", display: "inline-block", paddingRight: 30}}><TextField value={item.itemName} name="itemName" onChange={updateState} label="Name" variant="outlined" /></motion.div>
-                                <motion.div variants={variants} style={{width: "30%", display: "inline-block"}}><TextField value={item.itemPrice ? item.itemPrice : ""} name="itemPrice" onChange={updateState} label="Price" variant="outlined" /></motion.div>
+                                <motion.div variants={variants} style={{width: "calc(70% - 30px)", display: "inline-block", paddingRight: 30}}><TextField value={item.itemName} name="itemName" onChange={updateState} label="Name" variant="standard" /></motion.div>
+                                <motion.div variants={variants} style={{width: "30%", display: "inline-block"}}><TextField value={item.itemPrice ? item.itemPrice : ""} name="itemPrice" onChange={updateState} label="Price" variant="standard" /></motion.div>
                                 <motion.div variants={variants} className="select-section">
                                     <FormControl>
                                         <InputLabel id="demo-simple-select-label">Section</InputLabel>
@@ -136,7 +136,7 @@ export const AddItem: React.FC<Props> = ({handleChangeItem, shown, sections, han
                                             value={item.section}
                                             onChange={updateState}
                                             name="section"
-                                            variant="outlined"
+                                            variant="standard"
                                         >
                                             {sections.map((section, index) => {
                                                 return <MenuItem value={section.name} key={index}>{section.name}</MenuItem> 
@@ -144,8 +144,8 @@ export const AddItem: React.FC<Props> = ({handleChangeItem, shown, sections, han
                                         </Select>
                                     </FormControl>
                                 </motion.div>
-                                <motion.div variants={variants}><TextField value={item.imgUrl} name="imgUrl" onChange={updateState} label="Image URL" variant="outlined" /></motion.div>
-                                <motion.div variants={variants}><TextField value={item.itemDescription} name="itemDescription" multiline rows={3} onChange={updateState} label="Description" variant="outlined" /></motion.div>
+                                <motion.div variants={variants}><TextField value={item.imgUrl} name="imgUrl" onChange={updateState} label="Image URL" variant="standard" /></motion.div>
+                                <motion.div variants={variants}><TextField value={item.itemDescription} name="itemDescription" multiline rows={3} onChange={updateState} label="Description" variant="standard" /></motion.div>
                               
                                 <motion.div variants={variants} style={{display:"inline-block", paddingTop: 15}} className="select-section">
                                 <FormControlLabel
@@ -183,9 +183,9 @@ export const AddItem: React.FC<Props> = ({handleChangeItem, shown, sections, han
                                     }
                                     label="Featured"
                                     /></motion.div>
-                                 </div><motion.div variants={variants} style={{marginTop: 10}}>
+                                 </div><motion.div initial={{scale: 0}} animate={{scale:1}} style={{marginTop: 0}}>
                                         <ItemCard demoCard={true} item={item} handleEditItem={()=>{ console.log('') }} sections={sections}  handleDeleteItem = {() => console.log('')}/>
-                                        <motion.div variants={variants} style={{textAlign: "center", display: "block"}}>
+                                        <div style={{textAlign: "center", display: "block", marginTop: 10}}>
                                         <Fab variant="extended" color="primary" onClick={updateApp} href="#">
                                         <DoneIcon />
                                         <span style={{marginLeft:7, fontSize: "1.1em"}}>Add menu item</span>
@@ -194,7 +194,7 @@ export const AddItem: React.FC<Props> = ({handleChangeItem, shown, sections, han
                                         <ClearIcon />
                                         <span style={{marginLeft:7, fontSize: "1.1em"}}>Cancel</span>
                                         </Fab>
-                                    </motion.div>
+                                    </div>
                                 </motion.div>
 
                             </motion.div>
