@@ -31,7 +31,8 @@ interface Props{
 }
 interface Section{
     name: string,
-    order: number
+    order: number,
+    id: number
 }
 
 interface Item{
@@ -200,11 +201,11 @@ export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDelet
                                                 id="demo-simple-select"
                                                 value={itemState.section}
                                                 onChange={updateState}
-                                                name="section"
+                                                name="menu section"
                                                 variant="standard"
                                             >
                                                 {sections.map((section, index) => {
-                                                    return <MenuItem value={section.name} key={index}>{section.name}</MenuItem> 
+                                                    return <MenuItem value={section.name} key={section.id}>{section.name}</MenuItem> 
                                                 })}
                                             </Select>
                                         </FormControl>     

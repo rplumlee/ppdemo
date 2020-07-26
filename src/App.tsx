@@ -1,7 +1,9 @@
 import React from 'react';
 import AddSection from './components/AddSection';
 import ItemCard from './components/ItemCard';
+import SectionCard from './components/SectionCard';
 import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
 import { motion } from 'framer-motion';
 import { Parallax } from 'react-parallax';
 import { makeStyles } from '@material-ui/core/styles';
@@ -32,17 +34,20 @@ const theme = createMuiTheme({
 const initialSections = [
   {
     name: "Appetizers",
-    order: 1
+    order: 1,
+    id: 1
   },
   {
     name: "Entrees",
-    order: 2
+    order: 2,
+    id: 2
   },
   {
     name: "Desserts",
-    order: 3
+    order: 3,
+    id: 3
   }
-]
+];
 
 const initialItems = [
   {
@@ -149,7 +154,8 @@ interface Item{
 
 interface Section{
   name: string,
-  order: number
+  order: number,
+  id: number
 }
 
 
@@ -160,13 +166,15 @@ type ItemsActions =
 
 type SectionsActions = 
   | { type: "add"; section: Section}
-  | { type: "remove"; idx: number}
-  | { type: "update"; section: Section, idx: number}
+  | { type: "remove"; section: Section}
+  | { type: "update"; section: Section}
 
 type State = {
   items: Item[],
   sections: Section[],
-  openDrawer: Boolean
+  openDrawer: boolean,
+  openSection: boolean,
+  focusedSection: Section
 }
 
 const ItemsReducer = (state: State["items"], action: ItemsActions) => {
@@ -177,7 +185,6 @@ const ItemsReducer = (state: State["items"], action: ItemsActions) => {
       action.item.id = newID;
       return [...state, action.item];
     case "remove": 
-      console.log(action.item.itemName);
       return state.filter((item) => item.id !== action.item.id);
     case "update": 
       return state.map((item) => item.id === action.item.id ? action.item : item);
@@ -189,21 +196,41 @@ const ItemsReducer = (state: State["items"], action: ItemsActions) => {
 const SectionsReducer = (state: State["sections"], action: SectionsActions) => {
   switch (action.type){
     case "add":
-      if(action.section.order > state.length){
-        return [...state, action.section];
-      }
-      else{
-        return [
-          ...state.slice(0, action.section.order - 1),
-          
-            action.section,
-          
-          ...state.slice(action.section.order - 1)
-        ]
-      }
-      return state;
+      action.section.id = state[state.length -1].id + 1;
+      state = state.map((section) => { section.order = (section.order >= action.section.order) ? section.order + 1 : section.order; return section })
+     
+      state = [...state, action.section];
+       return state.sort((a, b) => {return a.order - b.order});
     case "remove": 
-      return state.filter((_, i) => action.idx !== i);
+      state = state.filter((section) => section.order !== action.section.order);
+      state = state.map((section) => { section.order = (action.section.order <= section.order) ? section.order - 1 : section.order; return section });
+      return state.sort((a, b) => {return a.order - b.order});
+    case "update": 
+      let originalOrder:number = 0;
+      state.map((section) => {if(section.id === action.section.id){originalOrder = section.order}});
+      state = state.map((section) => {
+        if(section.order > action.section.order){
+          if(section.order < originalOrder ){
+            section.order = section.order + 1
+          }
+        }
+        else if(section.order < action.section.order){
+          if(section.order > originalOrder ){
+            section.order -= 1
+          }
+        }
+        else if(section.order === action.section.order){
+          if(section.order > originalOrder ){
+            section.order -= 1
+          }else{
+            section.order += 1
+          }
+            
+        }
+        if(section.id === action.section.id){ section = action.section}
+        return section
+       })
+       return state.sort((a, b) => {return a.order - b.order});
     default:
       return state;
   }
@@ -219,7 +246,7 @@ const useStyles = makeStyles({
     textTransform: "none",
     transition: ".2s all",
     fontWeight: 400,
-    "&:hover": {
+    "&:hover": { 
       transform: "translateY(-6px)"
     }
   },
@@ -230,6 +257,7 @@ function App() {
   const [items, dispatchItems] = React.useReducer(ItemsReducer, initialItems);
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [openSection, setOpenSection] = React.useState(false);
+  const [focusedSection, setFocusedSection] = React.useState({name: "", order: 0, id: 0});
   const [sections, dispatchSections] = React.useReducer(SectionsReducer, initialSections);
 
 
@@ -251,11 +279,13 @@ function App() {
   }
 
   const renderCards = (items) => {
-    
-    return sections.map((section, index) => {
+    let tempSections = sections.sort((a,b) => {return a.order - b.order});
+    return tempSections.map((section, index) => {
       return (
-        <motion.div key={section.order} variants={variants}>
-          <h2 style={{position:"relative",textAlign: "left", marginLeft: 15, marginBottom: 5}}>{section.name}<span className="section-underline"></span></h2>
+        <motion.div key={section.id} variants={variants}>
+          <h2 style={{position:"relative",textAlign: "left", marginLeft: 15, marginBottom: 5}}>
+            {section.name} <a className="edit-section-link" onClick={()=>{setFocusedSection(section); setOpenSection(true)}}><EditIcon/></a>
+            <span className="section-underline"></span></h2>
           <div className="grid">
           {items.map((item, index) => {
             if(item.section == section.name){
@@ -298,6 +328,7 @@ const openAdd = () => {
   setOpenSection(false);
 }
 const openAddSection = () => {
+  setFocusedSection({name: "", order: 1, id: 0})
   setOpenSection(true);
   setOpenDrawer(false);
 }
@@ -341,13 +372,18 @@ const openAddSection = () => {
           handleCloseCard = {() => { setOpenDrawer(false) }}
         />
       </div>
+      <div style={openSection ? {display: "block"} : {display : "none"}}>
+        <SectionCard 
+          section={focusedSection} 
+          sections={sections} 
+          expandedProp={openSection} 
+          handleAddSection = {section => { dispatchSections({ type: "add", section: section}) }}
+          handleEditSection = {section => { dispatchSections({ type: "update", section: section}) }}
+          handleDeleteSection = {section => { dispatchSections({ type: "remove", section: section}) }}
+          handleCloseCard = {() => { setOpenSection(false); console.log(openSection)}}
+        />
+      </div>
 
-
-        <AddSection sections={sections} shown={openSection} handleChangeSection = {section => {
-          dispatchSections({ type: "add", section: section})
-        }} handleCloseSections = {() => {
-          setOpenSection(false);
-        }}/>
       <motion.div className="grid-container" animate={ "shown" } initial={ "hidden" } variants={variants}>
         {renderCards(items)}
       </motion.div> 

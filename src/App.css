@@ -234,7 +234,7 @@ h3.title{
   z-index: 10;
 }
 
-
+.section-form 
 .add-to-menu .MuiInputBase-root{
   width: 100%;
   border-radius: 0;
@@ -255,15 +255,23 @@ body .MuiPaper-elevation8{
 .add-to-menu .select-section .MuiInputLabel{
   transform: translate(0, 20px) scale(1);
 }
-.add-to-menu .section-name{
-  padding-right: 30px;
+.section-form .section-name,
+.section-form .section-position{
+  display: inline-flex;
+  margin: 40px 0;
 }
-body .add-to-menu .section-position{
-  width: 100px;
+.section-form .section-name{
+  padding-right: 30px;
+  min-width: 250px;
+}
+.section-form .MuiFormControl-root{
+  width: 100%;
+}
+body .section-form .section-position{
+  width: 80px;
   padding-right: 30px;
 }
 #demo-simple-select-label.MuiInputLabel-shrink {
-  transform: translate(0, -3px) scale(0.75);
   transform-origin: top left;
 }
 
@@ -273,7 +281,8 @@ body .add-to-menu .section-position{
 .MuiButtonBase-root.MuiFab-root{
   box-shadow: none;
 }
-.MuiCardActions-root a
+.MuiCardActions-root a,
+.section-form a
 {
   font-size: .8rem;
   display: inline-flex;
@@ -288,11 +297,13 @@ body .add-to-menu .section-position{
   position: absolute;
   margin-top:8px;
 }
-.MuiCardActions-root a:hover
+.MuiCardActions-root a:hover,
+.section-form a:hover
 {
   background:rgba(255,255,255,.4);
 }
-.MuiCardActions-root a svg{
+.MuiCardActions-root a svg,
+.section-form a svg{
   font-size: 1.3rem;
   margin-right: 5px;
 }
