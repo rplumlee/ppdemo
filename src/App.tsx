@@ -1,5 +1,4 @@
 import React from 'react';
-import AddItem from './components/AddItem';
 import AddSection from './components/AddSection';
 import ItemCard from './components/ItemCard';
 import AddIcon from '@material-ui/icons/Add';
@@ -261,7 +260,7 @@ function App() {
           {items.map((item, index) => {
             if(item.section == section.name){
               
-              return <motion.div key={item.id} style={{display: "inline-flex"}} variants={variants} className="app-card-container"><ItemCard item={item} sections={sections} handleDeleteItem={(item) => { dispatchItems({ type: "remove", item: item}) }} handleEditItem={(item) => { dispatchItems({ type: "update", item: item}) }} demoCard={false} /></motion.div>;
+              return <motion.div key={item.id} style={{display: "inline-flex"}} variants={variants} className="app-card-container"><ItemCard item={item} sections={sections} handleDeleteItem={(item) => { dispatchItems({ type: "remove", item: item}) }} handleEditItem={(item) => { dispatchItems({ type: "update", item: item}) }} handleAddItem={()=>{}} demoCard={false} /></motion.div>;
             }
                      })}</div>
         </motion.div>
@@ -333,11 +332,16 @@ const openAddSection = () => {
 
       </div>
       </Parallax>
-        <AddItem sections={sections} shown={openDrawer} handleChangeItem = {item => {
-          dispatchItems({ type: "add", item: item})
-        }} handleCloseItems = {() => {
-          setOpenDrawer(false);
-        }}/>
+      <div style={openDrawer ? {display: "block"} : {display : "none"}}>
+        <ItemCard 
+          item={{}} 
+          sections={sections} 
+          expandedProp={openDrawer} 
+          handleAddItem = {item => { dispatchItems({ type: "add", item: item}) }}
+          handleCloseCard = {() => { setOpenDrawer(false) }}
+        />
+      </div>
+
 
         <AddSection sections={sections} shown={openSection} handleChangeSection = {section => {
           dispatchSections({ type: "add", section: section})

@@ -20,11 +20,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 interface Props{
-    handleEditItem(item: Item): any,
-    handleDeleteItem(item: Item): any,
+    handleEditItem?(item: Item): any,
+    handleDeleteItem?(item: Item): any,
+    handleAddItem?(item: Item): any,
+    handleCloseCard?(): any,
     sections: Section[],
     item: Item,
-    demoCard: boolean
+    demoCard?: boolean,
+    expandedProp?: boolean
 }
 interface Section{
     name: string,
@@ -119,7 +122,7 @@ const useStyles = makeStyles({
   }
 
 
-export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDeleteItem, item, demoCard}) => {
+export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDeleteItem, item, demoCard, expandedProp, handleAddItem, handleCloseCard}) => {
     const classes = useStyles();
     const [itemState, setItemState] = React.useState(item);
     const [expanded, setExpanded] = React.useState(false);
@@ -139,21 +142,21 @@ export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDelet
 
     const updateApp = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        handleEditItem(itemState);
-        setExpanded(false);
+        expandedProp ? handleAddItem(itemState) : handleEditItem(itemState);
+        if (expandedProp){ setItemState({}) };
+        expandedProp ? handleCloseCard() : setExpanded(false);
     }
 
     const deleteItem = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
-        console.log(item);
         setExpanded(false);
         handleDeleteItem(item);
-
     }
 
     const closeCard = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
-        setExpanded(false);
+        if (expandedProp){ setItemState({}) };
+        expandedProp ? handleCloseCard() : setExpanded(false);
     }
 
 
@@ -161,36 +164,34 @@ export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDelet
         <div className={demoCard ? "" : "card-placeholder"}>
             <form onSubmit={updateApp}>
             
-            <motion.div variants={overlayVariant} initial={"hidden"} style={{position: "fixed"}}  animate={expanded ? "show" : "hidden"} onClick={() => setExpanded(false)}></motion.div>
+            <motion.div variants={overlayVariant} initial={"hidden"} style={{position: "fixed"}}  animate={expanded || expandedProp ? "show" : "hidden"} onClick={() => expandedProp ? handleCloseCard : setExpanded(false)}></motion.div>
 
-            <motion.div variants={wrapperVariant} className={expanded ? "cardexpander expanded" : "cardexpander"} initial={"normal"} animate={expanded ? "expanded" : "normal"} style={{display:"flex", justifyContent: "center", alignItems: "center"}}>
-                <Card className={classes.root} onClick={(e) => { expanded || demoCard ? console.log(' ') : setExpanded(true) }}>
+            <motion.div variants={wrapperVariant} className={expanded || expandedProp ? "cardexpander expanded" : "cardexpander"} initial={"normal"} animate={expanded || expandedProp ? "expanded" : "normal"} style={{display:"flex", justifyContent: "center", alignItems: "center"}}>
+                <Card className={classes.root} onClick={(e) => { expanded || expandedProp ? console.log(' ') : setExpanded(true) }}>
                     <CardActionArea>
                         <CardMedia
                             className={classes.media}
-                            image={demoCard ? 
-                                item.imgUrl ? item.imgUrl: "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
-                                : itemState.imgUrl ? itemState.imgUrl: "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"}
+                            image={itemState.imgUrl ? itemState.imgUrl: "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"}
                         />
                         <CardContent>
                         <div className="card-title">
-                            {expanded ? 
+                            {expanded || expandedProp ? 
                                 <h5 style={{margin: "0px 0px 5px 0px"}}><TextField value={itemState.itemName} name="itemName" onChange={updateState} label="Name" variant="standard" /><small><TextField value={itemState.itemPrice ? itemState.itemPrice : ""} name="itemPrice" onChange={updateState} label="Price" variant="standard" /></small></h5>
                                 : 
-                                <h5 style={{margin: "0px 0px 5px 0px"}}>{demoCard ? item.itemName : itemState.itemName} <small>{itemState.itemPrice ? "$" : ""}{demoCard ? item.itemPrice : itemState.itemPrice}</small></h5>
+                                <h5 style={{margin: "0px 0px 5px 0px"}}>{itemState.itemName} <small>{itemState.itemPrice ? "$" : ""}{itemState.itemPrice}</small></h5>
                             }
                         
                         </div>
                         <Typography variant="body2" color="textSecondary" component="div" style={{paddingTop:3, minHeight: 113}}>
                             <span>
-                                {expanded 
+                                {expanded || expandedProp 
                                     ? 
                                     <TextField value={itemState.itemDescription} name="itemDescription" multiline rows={4} onChange={updateState} label="Description" variant="standard" style={{marginBottom:12}}/>
                                     : 
-                                    demoCard ? item.itemDescription : itemState.itemDescription
+                                    itemState.itemDescription
                                 }
 
-                                {expanded 
+                                {expanded || expandedProp
                                     ? 
                                     <FormControl>
                                             <InputLabel id="demo-simple-select-label">Section</InputLabel>
@@ -213,7 +214,7 @@ export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDelet
                             </span>
 
                             
-                            {expanded 
+                            {expanded || expandedProp 
                                 ? 
                                 <span style={{display: "block", marginTop: 10}}>
                                     <FormControlLabel
@@ -251,9 +252,7 @@ export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDelet
                                     />
                                 </span>
                                 : 
-                                demoCard ? 
-                                <span style={{marginBottom:0, marginTop: 15}}>{item.gf ? <span className='gluten-free'>GF</span> : ""}{item.v ? <span className='vegan'>V</span> : ""}{item.featured ? <span className='featured'>Featured</span> : ""}</span>
-                                : <span style={{marginBottom:0, marginTop: 15}}>{itemState.gf ? <span className='gluten-free'>GF</span> : ""}{itemState.v ? <span className='vegan'>V</span> : ""}{itemState.featured ? <span className='featured'>Featured</span> : ""}</span>
+                               <span style={{marginBottom:0, marginTop: 15}}>{itemState.gf ? <span className='gluten-free'>GF</span> : ""}{itemState.v ? <span className='vegan'>V</span> : ""}{itemState.featured ? <span className='featured'>Featured</span> : ""}</span>
                             }
 
                             
@@ -267,7 +266,7 @@ export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDelet
                         </CardContent>
                     </CardActionArea>
                     <CardActions>
-                        {expanded 
+                        {expanded || expandedProp 
                                 ? 
                                 <span style={{margin: "10px 0 0 0", height: 48, alignItems: "center", display: "flex", justifyContent: "space-between", width: "100%"}}>
                                     <Fab  type="submit" variant="extended" color="primary">
@@ -277,10 +276,13 @@ export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDelet
                                         <ClearIcon />
                                         <span>Cancel</span>
                                     </a>
-                                    <a style={{display: "inline-flex",  cursor: "pointer"}} onClick={deleteItem}>
-                                        <DeleteIcon />
-                                        <span>Delete<span className="hidden-sm"> Item</span></span>
-                                    </a>
+                                    {expandedProp ?  "" : 
+                                        <a style={{display: "inline-flex",  cursor: "pointer"}} onClick={deleteItem}>
+                                            <DeleteIcon />
+                                            <span>Delete<span className="hidden-sm"> Item</span></span>
+                                        </a>
+                                    }
+
                                 </span>
                                 : 
                                 ""
