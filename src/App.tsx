@@ -194,17 +194,18 @@ const ItemsReducer = (state: State["items"], action: ItemsActions) => {
 }
 
 const SectionsReducer = (state: State["sections"], action: SectionsActions) => {
+
   switch (action.type){
     case "add":
-      action.section.id = state[state.length -1].id + 1;
-      state = state.map((section) => { section.order = (section.order >= action.section.order) ? section.order + 1 : section.order; return section })
+      action.section.id = state[state.length -1] ? state[state.length -1].id + 1 : 1;
+      let temp = state.map((section) => { section.order = (section.order >= action.section.order) ? section.order + 1 : section.order; return section })
      
-      state = [...state, action.section];
-       return state.sort((a, b) => {return a.order - b.order});
+      temp = [...temp, action.section];
+       return temp.sort((a, b) => {return a.order - b.order});
+
     case "remove": 
-      state = state.filter((section) => section.order !== action.section.order);
-      state = state.map((section) => { section.order = (action.section.order <= section.order) ? section.order - 1 : section.order; return section });
-      return state.sort((a, b) => {return a.order - b.order});
+      return state.map((section) => { section.order = (section.order >= action.section.order) ? section.order - 1 : section.order; return section }).filter((section) => section.id !== action.section.id);
+
     case "update": 
       let originalOrder:number = 0;
       state.map((section) => {if(section.id === action.section.id){originalOrder = section.order}});
@@ -257,9 +258,13 @@ function App() {
   const [items, dispatchItems] = React.useReducer(ItemsReducer, initialItems);
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [openSection, setOpenSection] = React.useState(false);
-  const [focusedSection, setFocusedSection] = React.useState({name: "", order: 0, id: 0});
   const [sections, dispatchSections] = React.useReducer(SectionsReducer, initialSections);
+  const [focusedSection, setFocusedSection] = React.useState({name: "", order: 1, id: 0});
 
+  const title = "Build Your Menu";
+  React.useEffect(() => {
+    document.title = title;
+  }, [title]); // Only re-run the effect if count changes
 
 
   const classes = useStyles();
@@ -283,12 +288,12 @@ function App() {
     return tempSections.map((section, index) => {
       return (
         <motion.div key={section.id} variants={variants}>
-          <h2 style={{position:"relative",textAlign: "left", marginLeft: 15, marginBottom: 5}}>
-            {section.name} <a className="edit-section-link" onClick={()=>{setFocusedSection(section); setOpenSection(true)}}><EditIcon/></a>
+          <h2 style={{cursor:"pointer",position:"relative",textAlign: "left", marginLeft: 15, marginBottom: 5}}  onClick={()=>{setFocusedSection(section); setOpenSection(true)}}>
+            {section.name} 
             <span className="section-underline"></span></h2>
           <div className="grid">
           {items.map((item, index) => {
-            if(item.section == section.name){
+            if(item.section === section.name){
               
               return <motion.div key={item.id} style={{display: "inline-flex"}} variants={variants} className="app-card-container"><ItemCard item={item} sections={sections} handleDeleteItem={(item) => { dispatchItems({ type: "remove", item: item}) }} handleEditItem={(item) => { dispatchItems({ type: "update", item: item}) }} handleAddItem={()=>{}} demoCard={false} /></motion.div>;
             }
@@ -348,7 +353,7 @@ const openAddSection = () => {
         
           <motion.div variants={headerVariants} initial={ "hidden" } animate={ "shown" } className="headerTitle">
               <motion.h1 className="title" variants={headerVariants}>Welcome to your menu</motion.h1>
-              <motion.h6 className="title" variants={headerVariants}>Get started with one of the buttons below or click on an existing menu item to edit it.</motion.h6>
+              <motion.h6 className="title" variants={headerVariants}>Get started with one of the buttons below or click on an existing menu section or item to edit it.</motion.h6>
               <motion.div variants={headerVariants}>
                 <Fab className={classes.root} variant="extended" color="primary" onClick={openAdd}>
                   <AddIcon />
@@ -380,7 +385,7 @@ const openAddSection = () => {
           handleAddSection = {section => { dispatchSections({ type: "add", section: section}) }}
           handleEditSection = {section => { dispatchSections({ type: "update", section: section}) }}
           handleDeleteSection = {section => { dispatchSections({ type: "remove", section: section}) }}
-          handleCloseCard = {() => { setOpenSection(false); console.log(openSection)}}
+          handleCloseCard = {() => { setOpenSection(false); }}
         />
       </div>
 

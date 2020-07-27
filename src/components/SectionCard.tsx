@@ -1,24 +1,14 @@
 import * as React from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import CardMedia from '@material-ui/core/CardMedia';
 import Fab from '@material-ui/core/Fab';
-import Typography from '@material-ui/core/Typography';
 import { motion } from 'framer-motion';
 import TextField from '@material-ui/core/TextField';
-import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
 import DeleteIcon from '@material-ui/icons/Delete';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import { Z_FIXED } from "zlib";
  
 interface Props{
     handleEditSection?(section: Section): any,
@@ -111,19 +101,25 @@ const useStyles = makeStyles({
   }
 
 
-export const SectionCard: React.FC<Props> = ({sections, handleEditSection, handleDeleteSection, section, expandedProp, handleAddSection, handleCloseCard}) => {
+export const SectionCard: React.FC<Props> = ({sections, section, handleEditSection, handleDeleteSection, expandedProp, handleAddSection, handleCloseCard}) => {
 
     const [sectionState, setSectionState] = React.useState(section);
+    const [sectionsState, setSectionsState] = React.useState(sections);
     const [update, setUpdate] = React.useState(false);
 
     React.useEffect(() => {
       setSectionState(section);
       setUpdate(section.name !== "" ? true : false);
-    }, [section])
+    }, [section]);
+
+    React.useEffect(() => {
+      setSectionsState(sections);
+
+    }, [sections]);
 
     const updateState = (e:React.ChangeEvent<HTMLInputElement>) => {
         const {value, name} = e.target; 
-        console.log(value);
+
         setSectionState({
             ...sectionState,
             [name]: value
@@ -141,7 +137,8 @@ export const SectionCard: React.FC<Props> = ({sections, handleEditSection, handl
     const deleteSection = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
         handleCloseCard();
-        handleDeleteSection(sectionState);
+        setSectionState({name: "", order: 1, id: 0});
+        handleDeleteSection(section);
     }
 
     const closeCard = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -219,15 +216,15 @@ export const SectionCard: React.FC<Props> = ({sections, handleEditSection, handl
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={sectionState.order}
+                        value={sections.length > 0 ? sectionState.order : update ? "" : 1}
                         onChange={updateState}
                         name="order"
                         variant="standard"
                     >
-                        {sections.map((section, index) => {
-                            return <MenuItem value={index + 1} key={index}>{index + 1}</MenuItem> 
+                        {sectionsState.map((section1, index) => {
+                            return <MenuItem value={section1.order} key={section1.order}>{section1.order}</MenuItem> 
                         })}
-                        {update ? "" : <MenuItem value={sections.length + 1} key={sections.length + 1}>{sections.length + 1}</MenuItem>}
+                        {update ? "" : <MenuItem value={sectionsState.length + 1} key={sectionsState.length + 1}>{sectionsState.length + 1}</MenuItem>}
                     </Select>
                 </FormControl></motion.div>
                 <motion.div style={{justifyContent: "space-between", display: "flex", width: "100%", position: "absolute", bottom: -80, left: "50%", transform: "translateX(-50%)"}}>

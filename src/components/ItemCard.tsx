@@ -126,7 +126,13 @@ const useStyles = makeStyles({
 export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDeleteItem, item, demoCard, expandedProp, handleAddItem, handleCloseCard}) => {
     const classes = useStyles();
     const [itemState, setItemState] = React.useState(item);
+    const [sectionsState, setSectionsState] = React.useState(sections);
     const [expanded, setExpanded] = React.useState(false);
+
+    React.useEffect(() => {
+        setSectionsState(sections);
+    }, [sections])
+  
 
     const updateState = (e:React.ChangeEvent<HTMLInputElement>) => {
         const {value, name} = e.target; 
@@ -195,16 +201,16 @@ export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDelet
                                 {expanded || expandedProp
                                     ? 
                                     <FormControl>
-                                            <InputLabel id="demo-simple-select-label">Section</InputLabel>
+                                            <InputLabel id="demo-simple-select-label">Menu Section</InputLabel>
                                             <Select
                                                 labelId="demo-simple-select-label"
                                                 id="demo-simple-select"
-                                                value={itemState.section}
+                                                value={sectionsState.length > 0 ? itemState.section : ""}
                                                 onChange={updateState}
-                                                name="menu section"
+                                                name="section"
                                                 variant="standard"
                                             >
-                                                {sections.map((section, index) => {
+                                                {sectionsState.map((section, index) => {
                                                     return <MenuItem value={section.name} key={section.id}>{section.name}</MenuItem> 
                                                 })}
                                             </Select>
