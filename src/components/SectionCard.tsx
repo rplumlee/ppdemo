@@ -1,14 +1,15 @@
-import * as React from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import Fab from '@material-ui/core/Fab';
-import { motion } from 'framer-motion';
-import TextField from '@material-ui/core/TextField';
-import ClearIcon from '@material-ui/icons/Clear';
-import DeleteIcon from '@material-ui/icons/Delete';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import * as React from "react"
+import { makeStyles } from '@material-ui/core/styles'
+import Fab from '@material-ui/core/Fab'
+import { motion } from 'framer-motion'
+import TextField from '@material-ui/core/TextField'
+import ClearIcon from '@material-ui/icons/Clear'
+import DeleteIcon from '@material-ui/icons/Delete'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import { Section } from '../types'
  
 interface Props{
     handleEditSection?(section: Section): any,
@@ -18,11 +19,6 @@ interface Props{
     sections: Section[],
     expandedProp?: boolean,
     section?: Section
-}
-interface Section{
-    name: string,
-    order: number,
-    id: number
 }
 
 const useStyles = makeStyles({
@@ -216,14 +212,14 @@ export const SectionCard: React.FC<Props> = ({sections, section, handleEditSecti
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={sections.length > 0 ? sectionState.order : update ? "" : 1}
+                        value={update ? sections.length > 1 ? sectionState.order : "" : 1}
                         onChange={updateState}
                         name="order"
                         variant="standard"
                     >
-                        {sectionsState.map((section1, index) => {
+                        {sections.length > 0 ? sections.map((section1, index) => {
                             return <MenuItem value={section1.order} key={section1.order}>{section1.order}</MenuItem> 
-                        })}
+                        }) : ""}
                         {update ? "" : <MenuItem value={sectionsState.length + 1} key={sectionsState.length + 1}>{sectionsState.length + 1}</MenuItem>}
                     </Select>
                 </FormControl></motion.div>

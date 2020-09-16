@@ -9,7 +9,6 @@ import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
 import { motion } from 'framer-motion';
 import TextField from '@material-ui/core/TextField';
-import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
 import DeleteIcon from '@material-ui/icons/Delete';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -18,34 +17,19 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import { Item, Section } from '../types'
 
 interface Props{
     handleEditItem?(item: Item): any,
     handleDeleteItem?(item: Item): any,
     handleAddItem?(item: Item): any,
     handleCloseCard?(): any,
-    sections: Section[],
+    sections?: Section[],
     item: Item,
     demoCard?: boolean,
     expandedProp?: boolean
 }
-interface Section{
-    name: string,
-    order: number,
-    id: number
-}
 
-interface Item{
-    itemName?: string,
-    itemPrice?: number,
-    section?: string,
-    itemDescription?: string,
-    imgUrl?: string,
-    id?: number,
-    gf?: boolean,
-    v?: boolean,
-    featured?: boolean
-  }
 
 const useStyles = makeStyles({
     root: {
@@ -211,7 +195,7 @@ export const ItemCard: React.FC<Props> = ({sections, handleEditItem, handleDelet
                                                 variant="standard"
                                             >
                                                 {sectionsState.map((section, index) => {
-                                                    return <MenuItem value={section.name} key={section.id}>{section.name}</MenuItem> 
+                                                    return <MenuItem value={section.id} key={section.id}>{section.name}</MenuItem> 
                                                 })}
                                             </Select>
                                         </FormControl>     
