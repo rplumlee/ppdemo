@@ -512,7 +512,7 @@ li {
 h2 {
   color: #333;
   margin: 8px 0;
-  font-size: 1.2em;
+  font-size: 1em;
   text-align: left;
 }
 
@@ -553,13 +553,33 @@ h2 {
   flex-direction: column;
   overflow: visible;
 
+  .sections-select{
+    width: 100%;
+    padding-right: 30px;
+
+    div{
+      display: flex;
+      
+    }
+  }
+
   .title-inputs{
     display: flex;
     justify-content: space-between;
+
+    &.column{
+      flex-direction: column;
+      min-width: 30%;
+
+      &.wide{
+        width: 60%;
+      }
+    }
   }
   .MuiInput-root{
     margin-bottom: 20px;
   }
+
   .card-buttons{
     padding: 15px 20px;
     margin: 20px -20px 0 -20px;

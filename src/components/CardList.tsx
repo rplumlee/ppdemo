@@ -1,11 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
-import ItemCard from './ItemCard';
 
-function Card({ id, itemName, itemDescription, imgUrl, setSelected, gf, v, featured, theme }) {
+function Card({ id, itemName, itemDescription, imgUrl, setSelected, gf, v, featured, sectionId, setSelectedSection, theme }) {
 
   return (
-    <li className={`card ${theme}`} onClick={() => setSelected(id)}>
+    <motion.li className={`card ${theme}`} onClick={() => {setSelected(id); setSelectedSection(sectionId)}} layoutId={`cardlist-${sectionId}`} key={`card-${id}`} exit={{scale: 0}}>
       <div className="card-content-container">
         <motion.div className="card-content" layoutId={`card-container-${id}`}>
           <motion.div
@@ -27,15 +26,15 @@ function Card({ id, itemName, itemDescription, imgUrl, setSelected, gf, v, featu
           </motion.div>
         </motion.div>
       </div>
-    </li>
+    </motion.li>
   );
 }
 
-export default function CardList({ items, setSelected, selectedId }) {
+export default function CardList({ items, setSelected, setSelectedSection, selectedId, sectionId }) {
   return (
     <ul className="card-list">
       {items.map((item, index) => (
-        <Card key={index} {...item} setSelected={setSelected} selectedId={selectedId} />
+        item.section === sectionId && <Card key={`${sectionId}-${index}`} {...item} setSelected={setSelected} selectedId={selectedId} sectionId={sectionId} setSelectedSection={setSelectedSection} layout />
       ))}
     </ul>
   );

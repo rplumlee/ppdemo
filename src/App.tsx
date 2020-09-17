@@ -4,11 +4,8 @@ import CardList from './components/CardList';
 import ItemPresence from './components/ItemPresence';
 import SectionCard from './components/SectionCard';
 import Header from './components/Header';
-import AddIcon from '@material-ui/icons/Add';
 import { motion, AnimateSharedLayout, AnimatePresence } from 'framer-motion';
-
 import { makeStyles } from '@material-ui/core/styles';
-import Fab from '@material-ui/core/Fab';
 import { MuiThemeProvider, unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core/styles';
 import { Item, Section } from './types'
 import { initialItems, initialSections } from './initialData'
@@ -54,10 +51,10 @@ type State = {
 const ItemsReducer = (state: State["items"], action: ItemsActions) => {
   switch (action.type){
     case "add":
-      let arr = state.sort((a,b) => { return a.id - b.id });
-      let newID = arr[arr.length - 1].id + 1;
-      action.item.id = newID;
-      return [...state, action.item];
+      const arr = state.sort((a,b) => { return a.id - b.id });
+      const newID = arr[arr.length - 1].id + 1;
+      const newItem = {...action.item, id:newID}
+      return [...state, newItem];
     case "remove": 
       return state.filter((item) => item.id !== action.item.id);
     case "update": 
@@ -136,6 +133,7 @@ function App() {
   const [sections, dispatchSections] = React.useReducer(SectionsReducer, initialSections);
   const [focusedSection, setFocusedSection] = React.useState({name: "", order: 1, id: 0});
   const [selectedId, setSelectedId] = React.useState(null);
+  const [selectedSection, setSelectedSection] = React.useState(null);
 
   const title = "Build Your Menu";
   React.useEffect(() => {
@@ -167,12 +165,12 @@ function App() {
           <h2 style={{cursor:"pointer",position:"relative",textAlign: "left", marginLeft: 15, marginBottom: 5}}  onClick={()=>{setFocusedSection(section); setOpenSection(true)}}>
             {section.name} 
             <span className="section-underline"></span></h2>
-          <div className="grid">
-          {items.map((item, index) => { 
-            if(item.section === section.id){
-              return <motion.div key={item.id} style={{display: "inline-flex"}} variants={variants} className="app-card-container"><ItemCard item={item} sections={sections} handleDeleteItem={(item) => { dispatchItems({ type: "remove", item: item}) }} handleEditItem={(item) => { dispatchItems({ type: "update", item: item}) }} handleAddItem={()=>{}} demoCard={false} /></motion.div>;
-            }
-          })}</div>
+            <AnimateSharedLayout type="crossfade">
+              <CardList items={items} setSelected={setSelected} setSelectedSection={setSelectedSection} selectedId={selectedId} sectionId={section.id}/>
+              <AnimatePresence>  
+                {selectedSection === section.id && selectedId && openDrawer && <ItemPresence key={`item-${section.id}`} sections={sections} items={items} id={selectedId} setSelected={setSelected} handleEditItem={(item) => { dispatchItems({ type: "update", item: item}) }} handleDeleteItem={(item) => { setTimeout(()=>{dispatchItems({ type: "remove", item: item})}, 500) }} />}
+              </AnimatePresence>
+            </AnimateSharedLayout>
         </motion.div>
       )
 
@@ -200,12 +198,6 @@ const openAddSection = () => {
     <div className="App">
       <MuiThemeProvider theme={theme}>
         <Header />
-        <AnimateSharedLayout type="crossfade">
-          <CardList items={items} setSelected={setSelected} selectedId={selectedId} />
-          <AnimatePresence>  
-            {selectedId && openDrawer && <ItemPresence sections={sections} items={items} id={selectedId} setSelected={setSelected} handleEditItem={(item) => { dispatchItems({ type: "update", item: item}) }}/>}
-          </AnimatePresence>
-        </AnimateSharedLayout>
       
       <div style={{display : "none"}}>
         <ItemCard 

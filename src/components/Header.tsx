@@ -1,7 +1,6 @@
 import React from 'react';
 import { Parallax } from 'react-parallax';
 import { motion } from 'framer-motion';
-import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
