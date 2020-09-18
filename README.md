@@ -4,6 +4,16 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 This is a demo I've been working with to test out and learn the conventions of Framer v2 and get caught up with React 16. Most notably I've been interested in mastering Shared Layouts. Demo can be found at http://rplumlee.github.io 
 
+## Planned Features
+
+The next few things I want to do:
+
+- hook back up functionality of add new item/section
+- add featured section up top
+- implement drag to reorder/change item section. On initial glance it looks like using Animate Presence breaks drag ability, but this may be fixed by the rerender on a drag action that actually changes the state.
+- actually add a db and upload image functionality
+- discount/promotion settings for visual marketing
+
 ## Available Scripts
 
 In the project directory, you can run:
