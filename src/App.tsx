@@ -109,9 +109,7 @@ const SectionsReducer = (state: State["sections"], action: SectionsActions) => {
 function App() {
   const [items, dispatchItems] = React.useReducer(ItemsReducer, initialItems);
   const [openDrawer, setOpenDrawer] = React.useState(false);
-  const [openSection, setOpenSection] = React.useState(false);
   const [sections, dispatchSections] = React.useReducer(SectionsReducer, initialSections);
-  const [focusedSection, setFocusedSection] = React.useState({name: "", order: 1, id: 0});
   const [selectedId, setSelectedId] = React.useState(null);
 
   const variants = {
@@ -134,7 +132,7 @@ function App() {
     return tempSections.map((section, index) => {
       return (
         <motion.div key={section.id} variants={variants}>
-            <motion.h2 className="section-header" onClick={()=>{setFocusedSection(section); setOpenSection(true)}} layoutId={`cardlist`}>
+            <motion.h2 className="section-header" layoutId={`cardlist`}>
             {section.name} 
             <span className="section-underline"></span></motion.h2>
             <CardList items={items} setSelected={setSelected} selectedId={selectedId} sectionId={section.id}/>
@@ -153,19 +151,6 @@ const setSelected = (id) => {
     <div className="App">
       <MuiThemeProvider theme={theme}>
         <Header />
-
-        <div style={openSection ? {display: "block"} : {display : "none"}}>
-          <SectionCard 
-            section={focusedSection} 
-            sections={sections} 
-            expandedProp={openSection} 
-            handleAddSection = {section => { dispatchSections({ type: "add", section: section}) }}
-            handleEditSection = {section => { dispatchSections({ type: "update", section: section}) }}
-            handleDeleteSection = {section => { dispatchSections({ type: "remove", section: section}) }}
-            handleCloseCard = {() => { setOpenSection(false); }}
-          />
-        </div>
-
         <motion.div className="grid-container" animate={ "shown" } initial={ "hidden" } variants={variants}>
           <AnimateSharedLayout type="crossfade">
             <AnimatePresence>  
