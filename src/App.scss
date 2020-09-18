@@ -524,6 +524,13 @@ h2 {
   }
 }
 
+.MuiFab-root{
+  background: linear-gradient(45deg, #1db675 30%, #60d7a4 90%);
+}
+.react-parallax-content .MuiFab-root{
+  margin: 0 15px;
+  display: none;
+}
 .category {
   color: #333;
   font-size: 14px;

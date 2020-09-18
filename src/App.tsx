@@ -136,9 +136,9 @@ function App() {
     return tempSections.map((section, index) => {
       return (
         <motion.div key={section.id} variants={variants}>
-            <h2 className="section-header" onClick={()=>{setFocusedSection(section); setOpenSection(true)}}>
+            <motion.h2 className="section-header" onClick={()=>{setFocusedSection(section); setOpenSection(true)}} layoutId={`cardlist`}>
             {section.name} 
-            <span className="section-underline"></span></h2>
+            <span className="section-underline"></span></motion.h2>
             <CardList items={items} setSelected={setSelected} selectedId={selectedId} sectionId={section.id}/>
         </motion.div>
       )

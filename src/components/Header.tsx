@@ -69,7 +69,7 @@ export const Header = () => (
         
           <motion.div variants={headerVariants} initial={ "hidden" } animate={ "shown" } className="headerTitle">
               <motion.h1 className="title" variants={headerVariants}>Welcome to your menu</motion.h1>
-              <motion.h6 className="title" variants={headerVariants}>Get started with one of the buttons below or click on an existing menu section or item to edit it.</motion.h6>
+              <motion.h6 className="title" variants={headerVariants}>Click on an existing menu section or item to edit it.</motion.h6>
               <motion.div variants={headerVariants}>
                 <Fab variant="extended" color="primary">
                   <AddIcon />
