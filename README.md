@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Summary
+
+This is a demo I've been working with to test out and learn the conventions of Framer v2 and get caught up with React 16. Most notably I've been interested in mastering Shared Layouts. Demo can be found at http://rplumlee.github.io 
+
 ## Available Scripts
 
 In the project directory, you can run:
