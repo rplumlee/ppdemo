@@ -65,14 +65,14 @@ const ItemsReducer = (state: State["items"], action: ItemsActions) => {
 }
 
 const SectionsReducer = (state: State["sections"], action: SectionsActions) => {
-  console.log(action);
+  
   switch (action.type){
     case "add":
-      action.section.id = state[state.length -1] ? state[state.length -1].id + 1 : 1;
-      let temp = state.map((section) => { section.order = (section.order >= action.section.order) ? section.order + 1 : section.order; return section })
-     
-      temp = [...temp, action.section];
-       return temp.sort((a, b) => {return a.order - b.order});
+      const newID = state[state.length -1] ? state[state.length -1].id + 1 : 1;
+      const newSection = {...action.section, id: newID}
+      let newSections = state.map((section) => { section.order = (section.order >= action.section.order) ? section.order + 1 : section.order; return section })   
+      newSections = [...newSections, newSection];
+      return newSections.sort((a, b) => {return a.order - b.order});
 
     case "remove": 
       return state.map((section) => { section.order = (section.order >= action.section.order) ? section.order - 1 : section.order; return section }).filter((section) => section.id !== action.section.id);
@@ -80,7 +80,7 @@ const SectionsReducer = (state: State["sections"], action: SectionsActions) => {
     case "update": 
       let originalOrder:number = 0;
       state.map((section) => {if(section.id === action.section.id){originalOrder = section.order}});
-      let temp2 = state.map((section) => {
+      let newSectionsOrdered = state.map((section) => {
         if(section.order > action.section.order){
           if(section.order < originalOrder ){
             section.order = section.order + 1
@@ -102,29 +102,11 @@ const SectionsReducer = (state: State["sections"], action: SectionsActions) => {
         if(section.id === action.section.id){ section = action.section }
         return section
        })
-       console.log(temp2);
-       return temp2.sort((a, b) => {return a.order - b.order});
+       return newSectionsOrdered.sort((a, b) => {return a.order - b.order});
     default:
       return state;
   }
 }
-
-
-const useStyles = makeStyles({
-  root: {
-    margin: 10,
-    paddingLeft: 20,
-    paddingRight: 30,
-    background: 'linear-gradient(45deg, #1db675 30%, #60d7a4 90%)',
-    textTransform: "none",
-    transition: ".2s all",
-    fontWeight: 400,
-    "&:hover": { 
-      transform: "translateY(-6px)"
-    }
-  },
-});
-
 
 function App() {
   const [items, dispatchItems] = React.useReducer(ItemsReducer, initialItems);
@@ -133,15 +115,7 @@ function App() {
   const [sections, dispatchSections] = React.useReducer(SectionsReducer, initialSections);
   const [focusedSection, setFocusedSection] = React.useState({name: "", order: 1, id: 0});
   const [selectedId, setSelectedId] = React.useState(null);
-  const [selectedSection, setSelectedSection] = React.useState(null);
 
-  const title = "Build Your Menu";
-  React.useEffect(() => {
-    document.title = title;
-  }, [title]); // Only re-run the effect if count changes
-
-
-  const classes = useStyles();
   const variants = {
     hidden: {
       opacity: 0,
@@ -162,20 +136,14 @@ function App() {
     return tempSections.map((section, index) => {
       return (
         <motion.div key={section.id} variants={variants}>
-          <h2 style={{cursor:"pointer",position:"relative",textAlign: "left", marginLeft: 15, marginBottom: 5}}  onClick={()=>{setFocusedSection(section); setOpenSection(true)}}>
+            <h2 className="section-header" onClick={()=>{setFocusedSection(section); setOpenSection(true)}}>
             {section.name} 
             <span className="section-underline"></span></h2>
-            <AnimateSharedLayout type="crossfade">
-              <CardList items={items} setSelected={setSelected} setSelectedSection={setSelectedSection} selectedId={selectedId} sectionId={section.id}/>
-              <AnimatePresence>  
-                {selectedSection === section.id && selectedId && openDrawer && <ItemPresence key={`item-${section.id}`} sections={sections} items={items} id={selectedId} setSelected={setSelected} handleEditItem={(item) => { dispatchItems({ type: "update", item: item}) }} handleDeleteItem={(item) => { setTimeout(()=>{dispatchItems({ type: "remove", item: item})}, 500) }} />}
-              </AnimatePresence>
-            </AnimateSharedLayout>
+            <CardList items={items} setSelected={setSelected} selectedId={selectedId} sectionId={section.id}/>
         </motion.div>
       )
-
     })
-  };
+  }
 
 const setSelected = (id) => {
   id === null ? setOpenDrawer(false) : setOpenDrawer(true)
@@ -221,7 +189,12 @@ const openAddSection = () => {
       </div>
 
       <motion.div className="grid-container" animate={ "shown" } initial={ "hidden" } variants={variants}>
-        {renderCards(items)}
+        <AnimateSharedLayout type="crossfade">
+          <AnimatePresence>  
+                {selectedId && openDrawer && <ItemPresence key="item" sections={sections} items={items} id={selectedId} setSelected={setSelected} handleEditItem={(item) => { dispatchItems({ type: "update", item: item}) }} handleDeleteItem={(item) => { setTimeout(()=>{dispatchItems({ type: "remove", item: item})}, 500) }} />}
+          </AnimatePresence>
+          {renderCards(items)}
+        </AnimateSharedLayout>
       </motion.div> 
       </MuiThemeProvider>
     </div>

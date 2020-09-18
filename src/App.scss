@@ -321,7 +321,7 @@ body{
 }
 .section-underline{
   height: 5px;
-  width: 250px;
+  width: 315px;
   display: block;
   position: absolute;
   bottom: -10px;
@@ -514,6 +514,14 @@ h2 {
   margin: 8px 0;
   font-size: 1em;
   text-align: left;
+
+  &.section-header{
+    cursor: pointer;
+    position: relative;
+    text-align: left;
+    margin: 40px 0 0 15px;
+    font-size: 1.2em;
+  }
 }
 
 .category {
