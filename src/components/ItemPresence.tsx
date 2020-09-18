@@ -1,6 +1,5 @@
 import React from "react";
-import { motion, usePresence } from "framer-motion";
-import { Item, Section } from '../types'
+import { motion } from "framer-motion";
 import TextField from '@material-ui/core/TextField';
 import ClearIcon from '@material-ui/icons/Clear';
 import DeleteIcon from '@material-ui/icons/Delete';

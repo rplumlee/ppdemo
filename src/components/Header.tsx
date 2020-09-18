@@ -73,11 +73,11 @@ export const Header = () => (
               <motion.div variants={headerVariants}>
                 <Fab variant="extended" color="primary">
                   <AddIcon />
-                  <span style={{marginLeft:7, fontSize: "1.1em"}}>Add menu item</span>
+                  <span>Add menu item</span>
                 </Fab>
                 <Fab variant="extended" color="primary">
                   <AddIcon />
-                  <span style={{marginLeft:7, fontSize: "1.1em"}}>Add menu section</span>
+                  <span>Add menu section</span>
                 </Fab>
               </motion.div>
           </motion.div>

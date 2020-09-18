@@ -1,11 +1,9 @@
 import React from 'react';
-import ItemCard from './components/ItemCard';
 import CardList from './components/CardList';
 import ItemPresence from './components/ItemPresence';
 import SectionCard from './components/SectionCard';
 import Header from './components/Header';
 import { motion, AnimateSharedLayout, AnimatePresence } from 'framer-motion';
-import { makeStyles } from '@material-ui/core/styles';
 import { MuiThemeProvider, unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core/styles';
 import { Item, Section } from './types'
 import { initialItems, initialSections } from './initialData'
@@ -150,52 +148,32 @@ const setSelected = (id) => {
   setSelectedId(id);
 }
 
-const openAdd = () => {
-  setOpenDrawer(true);
-  setOpenSection(false);
-}
-const openAddSection = () => {
-  setFocusedSection({name: "", order: 1, id: 0})
-  setOpenSection(true);
-  setOpenDrawer(false);
-}
-
-
 
   return (
     <div className="App">
       <MuiThemeProvider theme={theme}>
         <Header />
-      
-      <div style={{display : "none"}}>
-        <ItemCard 
-          item={{}} 
-          sections={sections} 
-          expandedProp={openDrawer} 
-          handleAddItem = {item => { dispatchItems({ type: "add", item: item}) }}
-          handleCloseCard = {() => { setOpenDrawer(false) }}
-        />
-      </div>
-      <div style={openSection ? {display: "block"} : {display : "none"}}>
-        <SectionCard 
-          section={focusedSection} 
-          sections={sections} 
-          expandedProp={openSection} 
-          handleAddSection = {section => { dispatchSections({ type: "add", section: section}) }}
-          handleEditSection = {section => { dispatchSections({ type: "update", section: section}) }}
-          handleDeleteSection = {section => { dispatchSections({ type: "remove", section: section}) }}
-          handleCloseCard = {() => { setOpenSection(false); }}
-        />
-      </div>
 
-      <motion.div className="grid-container" animate={ "shown" } initial={ "hidden" } variants={variants}>
-        <AnimateSharedLayout type="crossfade">
-          <AnimatePresence>  
-                {selectedId && openDrawer && <ItemPresence key="item" sections={sections} items={items} id={selectedId} setSelected={setSelected} handleEditItem={(item) => { dispatchItems({ type: "update", item: item}) }} handleDeleteItem={(item) => { setTimeout(()=>{dispatchItems({ type: "remove", item: item})}, 500) }} />}
-          </AnimatePresence>
-          {renderCards(items)}
-        </AnimateSharedLayout>
-      </motion.div> 
+        <div style={openSection ? {display: "block"} : {display : "none"}}>
+          <SectionCard 
+            section={focusedSection} 
+            sections={sections} 
+            expandedProp={openSection} 
+            handleAddSection = {section => { dispatchSections({ type: "add", section: section}) }}
+            handleEditSection = {section => { dispatchSections({ type: "update", section: section}) }}
+            handleDeleteSection = {section => { dispatchSections({ type: "remove", section: section}) }}
+            handleCloseCard = {() => { setOpenSection(false); }}
+          />
+        </div>
+
+        <motion.div className="grid-container" animate={ "shown" } initial={ "hidden" } variants={variants}>
+          <AnimateSharedLayout type="crossfade">
+            <AnimatePresence>  
+                  {selectedId && openDrawer && <ItemPresence key="item" sections={sections} items={items} id={selectedId} setSelected={setSelected} handleEditItem={(item) => { dispatchItems({ type: "update", item: item}) }} handleDeleteItem={(item) => { setTimeout(()=>{dispatchItems({ type: "remove", item: item})}, 500) }} />}
+            </AnimatePresence>
+            {renderCards(items)}
+          </AnimateSharedLayout>
+        </motion.div> 
       </MuiThemeProvider>
     </div>
   );

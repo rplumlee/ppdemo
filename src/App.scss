@@ -530,6 +530,11 @@ h2 {
 .react-parallax-content .MuiFab-root{
   margin: 0 15px;
   display: none;
+
+  span{
+    margin-left: 7px;
+    font-size: 1.1em;
+  }
 }
 .category {
   color: #333;

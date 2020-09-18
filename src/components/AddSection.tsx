@@ -1,20 +1,13 @@
 import * as React from "react";
 import TextField from '@material-ui/core/TextField';
-import ItemCard from './ItemCard';
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { makeStyles } from '@material-ui/core/styles';
-
-import { motion, AnimateSharedLayout, AnimatePresence } from 'framer-motion';
-import { TextareaAutosize } from "@material-ui/core";
-
+import { motion } from 'framer-motion';
 
 interface Props{
     handleChangeSection(section: Section): any,
@@ -105,7 +98,7 @@ export const AddSection: React.FC<Props> = ({handleChangeSection, shown, section
                                         <InputLabel id="demo-simple-select-label">Position</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-label"
-                                            id="demo-simple-select"
+                                            id="demo-simple-select" 
                                             value={section.order}
                                             onChange={updateState}
                                             name="order"

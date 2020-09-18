@@ -1,5 +1,4 @@
 import * as React from "react"
-import { makeStyles } from '@material-ui/core/styles'
 import Fab from '@material-ui/core/Fab'
 import { motion } from 'framer-motion'
 import TextField from '@material-ui/core/TextField'
@@ -20,82 +19,6 @@ interface Props{
     expandedProp?: boolean,
     section?: Section
 }
-
-const useStyles = makeStyles({
-    root: {
-      margin: 15,
-      boxShadow: "0px 18px 37px 0px rgba(0, 0, 0, 0.07)",
-      display: "inline-block",
-      transition: ".2s all",
-      textAlign: "left",
-      zIndex: 10,
-      '&:hover': {
-        boxShadow: "0px 25px 45px 0px rgba(0, 0, 0, 0.17)",
-        transform: "translateY(-5px)"
-    },
-    },
-    media: {
-      height: 140,
-    },
-  });
-
-  const wrapperVariant = {
-    normal: {
-      top: "calc(50vh)",
-      left: "calc(50vw)",
-      width: [280, 280],
-      scale: [.7,1],
-      height: "auto",
-      translateY: ["20%", "0%"],
-      translateX: ["0%", "0%"],
-      zIndex: 20,
-      transition: {
-        duration: .3,
-        delay: 0,
-        times: [0,.7]
-      }
-    },
-    expanded: {
-        scale: [.3, 1],
-        top: "42vh",
-        left: "50vw",
-        zIndex: 50,
-        translateY: ["-60%", "-50%"],
-        translateX: ["-50%", "-50%"],
-        width: [550, 550],
-        height: "auto",
-        transition: { 
-            duration: .3,
-            delay: 0,
-            times: [0,.7]
-        }
-    }
-  }
-
-  const overlayVariant = {
-    hidden: {
-      top: "0",
-      left: "0",
-      height: "0vh",
-      width: "0vh",
-      zIndex: 9,
-      overflow: "hidden",
-      content: "",
-      background: "rgba(0,0,0,.7)",
-      transition: {
-        duration: 0
-      }
-    },
-    show: {
-        zIndex: 49,
-        height: "100vh",
-        width: "100vw",
-        transition: { 
-            duration :0
-        }
-    } 
-  }
-
 
 export const SectionCard: React.FC<Props> = ({sections, section, handleEditSection, handleDeleteSection, expandedProp, handleAddSection, handleCloseCard}) => {
 
@@ -121,8 +44,6 @@ export const SectionCard: React.FC<Props> = ({sections, section, handleEditSecti
             [name]: value
         })
     }
-
-    
 
     const updateApp = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -198,7 +119,7 @@ export const SectionCard: React.FC<Props> = ({sections, section, handleEditSecti
   
 
     return(
-        <div>
+        <div className="section-card">
              <form onSubmit={updateApp} className="section-form">
              <motion.div variants={overlayVariant} initial={"hidden"} style={{position: "fixed"}}  animate={expandedProp ? "show" : "hidden"} onClick={expandedProp ? handleCloseCard : null}></motion.div>
 
