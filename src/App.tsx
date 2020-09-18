@@ -1,7 +1,7 @@
 import React from 'react';
 import CardList from './components/CardList';
 import ItemPresence from './components/ItemPresence';
-import SectionCard from './components/SectionCard';
+import SectionHeader from './components/SectionHeader';
 import Header from './components/Header';
 import { motion, AnimateSharedLayout, AnimatePresence } from 'framer-motion';
 import { MuiThemeProvider, unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core/styles';
@@ -35,7 +35,9 @@ type ItemsActions =
 type SectionsActions = 
   | { type: "add"; section: Section}
   | { type: "remove"; section: Section}
-  | { type: "update"; section: Section}
+  | { type: "increment"; section: Section}
+  | { type: "decrement"; section: Section}
+  | { type: "updateName"; section: Section}
 
 type State = {
   items: Item[],
@@ -73,34 +75,41 @@ const SectionsReducer = (state: State["sections"], action: SectionsActions) => {
       return newSections.sort((a, b) => {return a.order - b.order});
 
     case "remove": 
-      return state.map((section) => { section.order = (section.order >= action.section.order) ? section.order - 1 : section.order; return section }).filter((section) => section.id !== action.section.id);
+      return state.map((section) => { section.order = (section.order >= action.section.order) ? section.order - 1 : section.order; return section }).filter((section) => section.id !== action.section.id)
 
-    case "update": 
-      let originalOrder:number = 0;
-      state.map((section) => {if(section.id === action.section.id){originalOrder = section.order}});
-      let newSectionsOrdered = state.map((section) => {
-        if(section.order > action.section.order){
-          if(section.order < originalOrder ){
-            section.order = section.order + 1
-          }
+    case "updateName":
+      return state.map((section) => { return action.section.id === section.id ? action.section : section})
+
+    case "increment":
+      if(action.section.order === state.length){
+        return state
+      }
+      return state.map((section) => { 
+        if(section.order === action.section.order){
+          return {...section, order: section.order + 1}
         }
-        else if(section.order < action.section.order){
-          if(section.order > originalOrder ){
-            section.order -= 1
-          }
+        else if (section.order === action.section.order + 1){
+          return {...section, order: section.order - 1}
         }
-        else if(section.order === action.section.order){
-          if(section.order > originalOrder ){
-            section.order -= 1
-          }else{
-            section.order += 1
-          }
-            
+        else{
+          return section
         }
-        if(section.id === action.section.id){ section = action.section }
-        return section
-       })
-       return newSectionsOrdered.sort((a, b) => {return a.order - b.order});
+      })
+    case "decrement":
+      if(action.section.order === 1){
+        return state
+      }
+      return state.map((section) => { 
+        if(section.order === action.section.order){
+          return {...section, order: section.order - 1}
+        }
+        else if (section.order === action.section.order - 1){
+          return {...section, order: section.order + 1}
+        }
+        else{
+          return section
+        }
+      })
     default:
       return state;
   }
@@ -132,9 +141,7 @@ function App() {
     return tempSections.map((section, index) => {
       return (
         <motion.div key={section.id} variants={variants}>
-            <motion.h2 className="section-header" layoutId={`cardlist`}>
-            {section.name} 
-            <span className="section-underline"></span></motion.h2>
+            <SectionHeader section={section} handleIncrementSection={(section) => { dispatchSections({ type: "increment", section: section}) }} handleDecrementSection={(section) => { dispatchSections({ type: "decrement", section: section}) }} handleUpdateSectionName={(section) => { dispatchSections({ type: "updateName", section: section}) }}  />
             <CardList items={items} setSelected={setSelected} selectedId={selectedId} sectionId={section.id}/>
         </motion.div>
       )

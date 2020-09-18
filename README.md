@@ -9,12 +9,14 @@ This is a demo I've been working with to test out and learn the conventions of F
 The next few things I want to do:
 
 - ~~change animation style to framer's shared layout for smoother transitions~~
+- ~~refactor reducer actions for new layout style~~ 
 - ~~refactor reducers to pure functions~~
 - ~~refactor inline styles to stylesheet where practical~~
 - ~~refactor App.tsx into separate components where practical~~
 - ~~clean up unused modules~~
+- add uncategorized section
 - hook back up functionality of add new item/section with the new shared layout
-- remove old "SectionCard" and replace with inline editing of sections. Leave the Animate Presence to the actual menu items
+- ~~remove old "SectionCard" and replace with inline editing of sections. Leave the Animate Presence to the actual menu items~~
 - change order functionality from a property on the object to just using indices
 - add featured section up top
 - write some tests

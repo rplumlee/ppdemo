@@ -320,8 +320,8 @@ body{
   min-height: 310px;
 }
 .section-underline{
-  height: 5px;
-  width: 315px;
+  height: 3px;
+  width: 350px;
   display: block;
   position: absolute;
   bottom: -10px;
@@ -329,6 +329,31 @@ body{
   background: linear-gradient(to right, #029b59 20%, #3cc68a 50%, #60d7a4 100%);
   content: "";
   border-radius: 0 30px 0 30px;
+}
+.section-header{
+  display: flex;
+  justify-content: space-between;
+  width: 350px;
+  align-items: center;
+
+  .MuiFormControl-root{
+    width: 100%;
+  }
+.section-actions{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+  .MuiFab-root{
+    height: 22px;
+    width: 22px;
+    min-height: 0;
+    margin-left: 10px;
+    svg{
+      font-size: .8rem;
+    }
+    
+  }
 }
 body .MuiCheckbox-root{
   padding: 9px 5px 9px 9px;
