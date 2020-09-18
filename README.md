@@ -17,6 +17,8 @@ The next few things I want to do:
 - add uncategorized section
 - hook back up functionality of add new item/section with the new shared layout
 - ~~remove old "SectionCard" and replace with inline editing of sections. Leave the Animate Presence to the actual menu items~~
+- fix issue where editing section name breaks increment/decrement actions. Has to do with holding section state in the component. should be able to fix it by using input ref instead of state.
+- build out available toppings functionality
 - change order functionality from a property on the object to just using indices
 - add featured section up top
 - write some tests
