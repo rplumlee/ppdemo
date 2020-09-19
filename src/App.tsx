@@ -78,7 +78,7 @@ const SectionsReducer = (state: State["sections"], action: SectionsActions) => {
       return state.map((section) => { section.order = (section.order >= action.section.order) ? section.order - 1 : section.order; return section }).filter((section) => section.id !== action.section.id)
 
     case "updateName":
-      return state.map((section) => { return action.section.id === section.id ? action.section : section})
+      return state.map((section) => { return action.section.id === section.id ? {...section, name: action.section.name} : section})
 
     case "increment":
       if(action.section.order === state.length){
@@ -141,7 +141,7 @@ function App() {
     return tempSections.map((section, index) => {
       return (
         <div key={`section-block-${section.id}`}>
-            <SectionHeader section={section} handleIncrementSection={(section) => { dispatchSections({ type: "increment", section: section}) }} handleDecrementSection={(section) => { dispatchSections({ type: "decrement", section: section}) }} handleUpdateSectionName={(section) => { dispatchSections({ type: "updateName", section: section}) }}  />
+            <SectionHeader key={`section-component-${section.id}`} section={section} handleIncrementSection={(section) => { dispatchSections({ type: "increment", section: section}) }} handleDecrementSection={(section) => { dispatchSections({ type: "decrement", section: section}) }} handleUpdateSectionName={(section) => { dispatchSections({ type: "updateName", section: section}) }}  />
             <CardList items={items} setSelected={setSelected} selectedId={selectedId} sectionId={section.id}/>
         </div>
       )

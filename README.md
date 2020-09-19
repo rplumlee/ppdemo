@@ -24,9 +24,10 @@ The next few things I want to do:
 - implement drag to reorder/change item section. On initial glance it looks like using Animate Presence breaks drag ability, but this may be fixed by the rerender on a drag action that actually changes the state.
 - actually add a db and upload image functionality
 - discount/promotion settings for visual marketing
+- add exit animation on card deletion
 
 Bugs to investigate
-- editing section name breaks increment/decrement actions. Has to do with holding section state in the component. should be able to fix it by using input ref instead of state.
+- ~~editing section name breaks increment/decrement actions. Has to do with holding section state in the section header component and it not updating with the inc/dec.~~
 - ~~sometimes after deleting all items from a menu section the layout tries to treat an item as a menu card~~
 - on first increment/decrement of a section the page scrolls with the section. Not an actual problem but I don't like it.
 
