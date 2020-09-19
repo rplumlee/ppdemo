@@ -19,8 +19,9 @@ The next few things I want to do:
 - ~~remove old "SectionCard" and replace with inline editing of sections. Leave the Animate Presence to the actual menu items~~
 - build out available toppings functionality
 - change order functionality from a property on the object to just using indices
-- add featured section up top
+- ~~add featured section up top~~
 - write some tests
+- reorder menu items functionality
 - implement drag to reorder/change item section. On initial glance it looks like using Animate Presence breaks drag ability, but this may be fixed by the rerender on a drag action that actually changes the state.
 - actually add a db and upload image functionality
 - discount/promotion settings for visual marketing

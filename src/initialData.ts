@@ -81,7 +81,7 @@ export const initialItems = [
       id: 6,
       gf: true,
       v: false,
-      featured: false
+      featured: true
     },
     {
       itemName: "Cake",
@@ -92,7 +92,7 @@ export const initialItems = [
       id: 7,
       gf: true,
       v: true,
-      featured: true
+      featured: false
     },
     {
       itemName: "Pasta",

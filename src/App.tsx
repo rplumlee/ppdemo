@@ -117,9 +117,14 @@ const SectionsReducer = (state: State["sections"], action: SectionsActions) => {
 
 function App() {
   const [items, dispatchItems] = React.useReducer(ItemsReducer, initialItems);
-  const [openDrawer, setOpenDrawer] = React.useState(false);
+  const [openPresence, setOpenPresence] = React.useState(false);
   const [sections, dispatchSections] = React.useReducer(SectionsReducer, initialSections);
   const [selectedId, setSelectedId] = React.useState(null);
+
+  const setSelected = (id) => {
+    id === null ? setOpenPresence(false) : setOpenPresence(true)
+    setSelectedId(id);
+  }
 
   const variants = {
     hidden: {
@@ -137,8 +142,7 @@ function App() {
   }
 
   const renderCards = (items) => {
-    let tempSections = sections.sort((a,b) => {return a.order - b.order});
-    return tempSections.map((section, index) => {
+    return sections.sort((a,b) => {return a.order - b.order}).map((section, index) => {
       return (
         <div key={`section-block-${section.id}`}>
             <SectionHeader key={`section-component-${section.id}`} section={section} handleIncrementSection={(section) => { dispatchSections({ type: "increment", section: section}) }} handleDecrementSection={(section) => { dispatchSections({ type: "decrement", section: section}) }} handleUpdateSectionName={(section) => { dispatchSections({ type: "updateName", section: section}) }}  />
@@ -148,11 +152,14 @@ function App() {
     })
   }
 
-const setSelected = (id) => {
-  id === null ? setOpenDrawer(false) : setOpenDrawer(true)
-  setSelectedId(id);
-}
-
+  const renderFeaturedItems = (items) => {
+      return (
+        <div key={`section-block-featured`} className="featured-section">
+            <SectionHeader key={`section-component-featured`} section={{id: 0, name: 'Featured Menu Items', order: 0}} handleIncrementSection={() => { }} handleDecrementSection={() => { }} handleUpdateSectionName={() => { }}  />
+            <CardList items={items} setSelected={setSelected} selectedId={selectedId} sectionId={0}/>
+        </div>
+      )
+  }
 
   return (
     <div className="App">
@@ -161,8 +168,9 @@ const setSelected = (id) => {
         <motion.div className="grid-container" animate={ "shown" } initial={ "hidden" } variants={variants}>
           <AnimateSharedLayout type="crossfade">
             <AnimatePresence>  
-                  {selectedId && openDrawer && <ItemPresence key="item" sections={sections} items={items} id={selectedId} setSelected={setSelected} handleEditItem={(item) => { dispatchItems({ type: "update", item: item}) }} handleDeleteItem={(item) => { setTimeout(()=>{dispatchItems({ type: "remove", item: item})}, 500) }} />}
+                  {selectedId && openPresence && <ItemPresence key="item" sections={sections} items={items} id={selectedId} setSelected={setSelected} handleEditItem={(item) => { dispatchItems({ type: "update", item: item}) }} handleDeleteItem={(item) => { setTimeout(()=>{dispatchItems({ type: "remove", item: item})}, 500) }} />}
             </AnimatePresence>
+            {renderFeaturedItems(items)}
             {renderCards(items)}
           </AnimateSharedLayout>
         </motion.div> 

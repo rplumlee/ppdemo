@@ -33,9 +33,14 @@ function Card({ id, itemName, itemDescription, imgUrl, setSelected, gf, v, featu
 export default function CardList({ items, setSelected, selectedId, sectionId }) {
   return (
     <ul className="card-list">
-      {items.map((item, index) => (
-        item.section === sectionId && <Card key={`${sectionId}-${index}`} {...item} setSelected={setSelected} selectedId={selectedId} sectionId={sectionId} layout />
-      ))}
+      {sectionId != 0 ? items.map((item, index) => (
+        !item.featured && item.section === sectionId && <Card key={`${sectionId}-${index}`} {...item} setSelected={setSelected} selectedId={selectedId} sectionId={sectionId} layout />
+      ))
+        :
+        items.map((item, index) => (
+          item.featured && <Card key={`featured-${index}`} {...item} setSelected={setSelected} selectedId={selectedId} sectionId={sectionId} layout />
+        ))
+      }
     </ul>
   );
 }

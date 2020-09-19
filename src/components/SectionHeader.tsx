@@ -33,7 +33,7 @@ export const SectionHeader: React.FC<Props> = ({handleIncrementSection, handleDe
            
             <motion.h2 className="section-header" layoutId={`cardList`} key={`section-${section.id}`}>
                 {!isEditing ? section.name : <TextField value={newSection.name} name="name" onChange={updateInputState} variant="standard" /> } 
-                <div className="section-actions">
+                <div className={section.id != 0 ? 'section-actions' : 'section-actions featured'}>
                     {!isEditing ? 
                         (<span><Fab color="primary" size="small" onClick={() => {handleIncrementSection(section)}}>
                             <ArrowDownward />
