@@ -25,6 +25,7 @@ The next few things I want to do:
 - actually add a db and upload image functionality
 - discount/promotion settings for visual marketing
 - add exit animation on card deletion
+- clean up css
 
 Bugs to investigate
 - ~~editing section name breaks increment/decrement actions. Has to do with holding section state in the section header component and it not updating with the inc/dec.~~

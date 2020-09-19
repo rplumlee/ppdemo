@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/ppdemo1/static/css/main.3eacbb4b.chunk.css",
+    "main.css": "/ppdemo1/static/css/main.fd6b6c72.chunk.css",
     "main.js": "/ppdemo1/static/js/main.e8858016.chunk.js",
     "main.js.map": "/ppdemo1/static/js/main.e8858016.chunk.js.map",
     "runtime-main.js": "/ppdemo1/static/js/runtime-main.dd5ab49b.js",
@@ -8,16 +8,16 @@
     "static/js/2.00920d8a.chunk.js": "/ppdemo1/static/js/2.00920d8a.chunk.js",
     "static/js/2.00920d8a.chunk.js.map": "/ppdemo1/static/js/2.00920d8a.chunk.js.map",
     "index.html": "/ppdemo1/index.html",
-    "precache-manifest.70841a58b8403992df47014b4b85e15c.js": "/ppdemo1/precache-manifest.70841a58b8403992df47014b4b85e15c.js",
+    "precache-manifest.25af254230138b07c5d243701142b694.js": "/ppdemo1/precache-manifest.25af254230138b07c5d243701142b694.js",
     "service-worker.js": "/ppdemo1/service-worker.js",
-    "static/css/main.3eacbb4b.chunk.css.map": "/ppdemo1/static/css/main.3eacbb4b.chunk.css.map",
+    "static/css/main.fd6b6c72.chunk.css.map": "/ppdemo1/static/css/main.fd6b6c72.chunk.css.map",
     "static/js/2.00920d8a.chunk.js.LICENSE.txt": "/ppdemo1/static/js/2.00920d8a.chunk.js.LICENSE.txt",
     "static/media/parallax.jpg": "/ppdemo1/static/media/parallax.3e6de7d1.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.dd5ab49b.js",
     "static/js/2.00920d8a.chunk.js",
-    "static/css/main.3eacbb4b.chunk.css",
+    "static/css/main.fd6b6c72.chunk.css",
     "static/js/main.e8858016.chunk.js"
   ]
 }
