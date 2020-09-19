@@ -140,10 +140,10 @@ function App() {
     let tempSections = sections.sort((a,b) => {return a.order - b.order});
     return tempSections.map((section, index) => {
       return (
-        <motion.div key={section.id} variants={variants}>
+        <div key={`section-block-${section.id}`}>
             <SectionHeader section={section} handleIncrementSection={(section) => { dispatchSections({ type: "increment", section: section}) }} handleDecrementSection={(section) => { dispatchSections({ type: "decrement", section: section}) }} handleUpdateSectionName={(section) => { dispatchSections({ type: "updateName", section: section}) }}  />
             <CardList items={items} setSelected={setSelected} selectedId={selectedId} sectionId={section.id}/>
-        </motion.div>
+        </div>
       )
     })
   }

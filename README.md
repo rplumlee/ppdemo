@@ -17,7 +17,6 @@ The next few things I want to do:
 - add uncategorized section
 - hook back up functionality of add new item/section with the new shared layout
 - ~~remove old "SectionCard" and replace with inline editing of sections. Leave the Animate Presence to the actual menu items~~
-- fix issue where editing section name breaks increment/decrement actions. Has to do with holding section state in the component. should be able to fix it by using input ref instead of state.
 - build out available toppings functionality
 - change order functionality from a property on the object to just using indices
 - add featured section up top
@@ -25,6 +24,11 @@ The next few things I want to do:
 - implement drag to reorder/change item section. On initial glance it looks like using Animate Presence breaks drag ability, but this may be fixed by the rerender on a drag action that actually changes the state.
 - actually add a db and upload image functionality
 - discount/promotion settings for visual marketing
+
+Bugs to investigate
+- editing section name breaks increment/decrement actions. Has to do with holding section state in the component. should be able to fix it by using input ref instead of state.
+- ~~sometimes after deleting all items from a menu section the layout tries to treat an item as a menu card~~
+- on first increment/decrement of a section the page scrolls with the section. Not an actual problem but I don't like it.
 
 ## Available Scripts
 

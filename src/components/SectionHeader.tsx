@@ -25,14 +25,13 @@ export const SectionHeader: React.FC<Props> = ({handleIncrementSection, handleDe
         const {value, name} = e.target
         setNewSection({
             ...newSection,
-            [name]: value
-        })
+            [name]: value 
+        }) 
       }   
 
     return( 
-        <motion.div layoutId={'cardList'}>
-            
-            <motion.h2 className="section-header" layoutId={`cardlist`}>
+           
+            <motion.h2 className="section-header" layoutId={`cardList`} key={`section-${section.id}`}>
                 {!isEditing ? section.name : <TextField value={newSection.name} name="name" onChange={updateInputState} variant="standard" /> } 
                 <div className="section-actions">
                     {!isEditing ? 
@@ -51,8 +50,6 @@ export const SectionHeader: React.FC<Props> = ({handleIncrementSection, handleDe
                 </div>
                 {!isEditing && <motion.span className="section-underline"></motion.span>}
             </motion.h2>
-            
-        </motion.div>
     )
 }
 
