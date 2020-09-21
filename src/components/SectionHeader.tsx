@@ -12,12 +12,30 @@ interface Props{
     handleIncrementSection(section: Section): any,
     handleDecrementSection(section: Section): any,
     handleUpdateSectionName(section: Section): any,
-    section: Section
+    section: Section,
+    numberSections: number
+}
+
+const variants = {
+    "show": {
+        opacity: 1,
+        scale: 1,
+        transition: {
+            delay: .3
+        }
+    },
+    "hide": {
+        opacity: 0,
+        scale: 0,
+        transition: {
+            delay: .3
+        }
+    }
 }
 
 
 
-export const SectionHeader: React.FC<Props> = ({handleIncrementSection, handleDecrementSection, handleUpdateSectionName, section}) => {
+export const SectionHeader: React.FC<Props> = ({handleIncrementSection, handleDecrementSection, handleUpdateSectionName, section, numberSections}) => {
     const [isEditing, setIsEditing] = React.useState(false)
     const [newSection, setNewSection] = React.useState(section)
 
@@ -35,15 +53,23 @@ export const SectionHeader: React.FC<Props> = ({handleIncrementSection, handleDe
                 {!isEditing ? section.name : <TextField value={newSection.name} name="name" onChange={updateInputState} variant="standard" /> } 
                 <div className={section.id != 0 ? 'section-actions' : 'section-actions featured'}>
                     {!isEditing ? 
-                        (<span><Fab color="primary" size="small" onClick={() => {handleIncrementSection(section)}}>
-                            <ArrowDownward />
-                        </Fab>
-                        <Fab color="primary" size="small" onClick={() => {handleDecrementSection(section)}}>
-                                <ArrowUpward />
-                            </Fab>
+                        (<span>
+                            <motion.span variants={variants} animate={section.order != numberSections ? "show" : "hide"}>
+                                <Fab color="primary" size="small" onClick={() => {handleIncrementSection(section)}} className={section.order != numberSections ? "" : "no-pointer-events"}>
+                                    <ArrowDownward />
+                                </Fab>
+                            </motion.span> 
+                            <motion.span variants={variants} animate={section.order != 1 ? "show" : "hide"}>
+                                <Fab color="primary" size="small" onClick={() => {handleDecrementSection(section)}} className={section.order != 1 ? "" : "no-pointer-events"}>
+                                    <ArrowUpward />
+                                </Fab>
+                            </motion.span> 
                             <Fab color="primary" size="small" onClick={() => {setIsEditing(true)}}>
-                            <EditIcon />
-                        </Fab></span>) 
+                                <EditIcon />
+                            </Fab>
+                           
+                            
+                        </span>) 
                 : (<Fab color="primary" size="small" onClick={() => {handleUpdateSectionName(newSection); setIsEditing(false)}}>
                         <DoneIcon />
                     </Fab>) }

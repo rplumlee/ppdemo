@@ -557,21 +557,7 @@ h2 {
 .MuiFab-root{
   background: linear-gradient(120deg, darken(#1db675, 10%) 30%, darken(#60d7a4, 10%) 90%);
 }
-.featured-section{  
-  h2.section-header{
-      color: #fff;
-      background: linear-gradient(120deg, darken(#1db675, 10%) 30%, darken(#60d7a4, 10%) 90%);
-      width: calc(100% - 40px);
-      padding: 15px 35px;
-      border-radius: 5px;
-      margin-left: -15px;
-      margin-right: -15px;
 
-      .section-underline{
-        display: none;
-      }
-  }
-}
 .react-parallax-content .MuiFab-root{
   margin: 0 15px;
 
@@ -597,7 +583,9 @@ h2 {
   transform: translateX(-50%);
   width: 100%;
 }
-
+.no-pointer-events{
+  pointer-events: none;
+}
 .overlay a {
   display: block;
   position: fixed;
@@ -694,6 +682,5 @@ p {
     padding: 20px 0 0 0;
     pointer-events: none;
   }
-  .featured-section{  
-    h2.section-header{width: calc(100% - 70px)}}
+
 }

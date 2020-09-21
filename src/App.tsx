@@ -145,7 +145,7 @@ function App() {
     return sections.sort((a,b) => {return a.order - b.order}).map((section, index) => {
       return (
         <div key={`section-block-${section.id}`}>
-            <SectionHeader key={`section-component-${section.id}`} section={section} handleIncrementSection={(section) => { dispatchSections({ type: "increment", section: section}) }} handleDecrementSection={(section) => { dispatchSections({ type: "decrement", section: section}) }} handleUpdateSectionName={(section) => { dispatchSections({ type: "updateName", section: section}) }}  />
+            <SectionHeader key={`section-component-${section.id}`} section={section} numberSections={sections.length} handleIncrementSection={(section) => { dispatchSections({ type: "increment", section: section}) }} handleDecrementSection={(section) => { dispatchSections({ type: "decrement", section: section}) }} handleUpdateSectionName={(section) => { dispatchSections({ type: "updateName", section: section}) }}  />
             <CardList items={items} setSelected={setSelected} selectedId={selectedId} sectionId={section.id}/>
         </div>
       )
@@ -155,7 +155,7 @@ function App() {
   const renderFeaturedItems = (items) => {
       return (
         <div key={`section-block-featured`} className="featured-section">
-            <SectionHeader key={`section-component-featured`} section={{id: 0, name: 'Featured Menu Items', order: 0}} handleIncrementSection={() => { }} handleDecrementSection={() => { }} handleUpdateSectionName={() => { }}  />
+            <SectionHeader key={`section-component-featured`} section={{id: 0, name: 'Featured Menu Items', order: 0}} handleIncrementSection={() => { }} handleDecrementSection={() => { }} handleUpdateSectionName={() => { }} numberSections={sections.length} />
             <CardList items={items} setSelected={setSelected} selectedId={selectedId} sectionId={0}/>
         </div>
       )
