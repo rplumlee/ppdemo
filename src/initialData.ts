@@ -13,6 +13,11 @@ export const initialSections = [
       name: "Desserts",
       order: 3,
       id: 3
+    },
+    {
+      name: "Drinks",
+      order: 4,
+      id: 4
     }
   ];
   
@@ -37,7 +42,7 @@ export const initialItems = [
       id: 2,
       gf: true,
       v: true,
-      featured: true
+      featured: false
     },
     {
       itemName: "Fries",
@@ -95,14 +100,47 @@ export const initialItems = [
       featured: false
     },
     {
+      itemName: "Creme Brulee",
+      section: 3,
+      itemPrice: 15.95,
+      itemDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+      imgUrl: "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2011/7/26/1/EA0914_creme-brulee_s4x3.jpg.rend.hgtvcom.616.462.suffix/1382539982692.jpeg",
+      id: 11,
+      gf: true,
+      v: true,
+      featured: false
+    },
+    {
       itemName: "Pasta",
       section: 2,
       itemPrice: 15.95,
-      itemDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      itemDescription: "Lorem ipsum dolor sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       imgUrl: "https://ohsheglows.com/gs_images/2020/05/IMG_5643-256x256.jpg",
       id: 8,
       gf: false,
       v: false,
+      featured: false
+    },
+    {
+      itemName: "Soda",
+      section: 4,
+      itemPrice: 15.95,
+      itemDescription: "Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      imgUrl: "https://www.cohenmedical.com/wp-content/uploads/2020/06/soda3.jpg",
+      id: 9,
+      gf: true,
+      v: true,
+      featured: false
+    },
+    {
+      itemName: "Beer",
+      section: 4,
+      itemPrice: 15.95,
+      itemDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      imgUrl: "https://cdn.britannica.com/96/90096-050-514D5088/Glasses-beer-bar-Brussels.jpg",
+      id: 10,
+      gf: false,
+      v: true,
       featured: false
     }
   ]

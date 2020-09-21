@@ -28,34 +28,6 @@ const headerStyles = {
     minHeight: 550
 }
 
-const buttonStyles = {
-    margin: 10,
-    paddingLeft: 20,
-    paddingRight: 30,
-    background: 'linear-gradient(45deg, #1db675 30%, #60d7a4 90%)',
-    textTransform: "none",
-    transition: ".2s all",
-    fontWeight: 400
-}
-
-/*
-const useStyles = makeStyles({
-    root: {
-      margin: 10,
-      paddingLeft: 20,
-      paddingRight: 30,
-      background: 'linear-gradient(45deg, #1db675 30%, #60d7a4 90%)',
-      textTransform: "none",
-      transition: ".2s all",
-      fontWeight: 400,
-      "&:hover": { 
-        transform: "translateY(-6px)"
-      }
-    },
-});
-
-const classes = useStyles();
-  */
 
 export const Header = () => (
 

@@ -51,16 +51,16 @@ export const SectionHeader: React.FC<Props> = ({handleIncrementSection, handleDe
            
             <motion.h2 className="section-header" layoutId={`cardList`} key={`section-${section.id}`}>
                 {!isEditing ? section.name : <TextField value={newSection.name} name="name" onChange={updateInputState} variant="standard" /> } 
-                <div className={section.id != 0 ? 'section-actions' : 'section-actions featured'}>
+                <div className={section.id !== 0 ? 'section-actions' : 'section-actions featured'}>
                     {!isEditing ? 
                         (<span>
-                            <motion.span variants={variants} animate={section.order != numberSections ? "show" : "hide"}>
-                                <Fab color="primary" size="small" onClick={() => {handleIncrementSection(section)}} className={section.order != numberSections ? "" : "no-pointer-events"}>
+                            <motion.span variants={variants} animate={section.order !== numberSections ? "show" : "hide"}>
+                                <Fab color="primary" size="small" onClick={() => {handleIncrementSection(section)}} className={section.order !== numberSections ? "" : "no-pointer-events"}>
                                     <ArrowDownward />
                                 </Fab>
                             </motion.span> 
-                            <motion.span variants={variants} animate={section.order != 1 ? "show" : "hide"}>
-                                <Fab color="primary" size="small" onClick={() => {handleDecrementSection(section)}} className={section.order != 1 ? "" : "no-pointer-events"}>
+                            <motion.span variants={variants} animate={section.order !== 1 ? "show" : "hide"}>
+                                <Fab color="primary" size="small" onClick={() => {handleDecrementSection(section)}} className={section.order !== 1 ? "" : "no-pointer-events"}>
                                     <ArrowUpward />
                                 </Fab>
                             </motion.span> 

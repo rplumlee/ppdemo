@@ -131,15 +131,15 @@ export default function ItemPresence({ items, id, setSelected, sections, handleE
                 <Fab variant="extended" color="primary" onClick={() => {updateItem()}}>
                     <span>Confirm<span className="hidden-sm"> edits</span></span>
                 </Fab>
-                <div>
-                  <a onClick={() => {setSelected(null)}}>
+                <div className="cancel-delete-buttons">
+                  <button onClick={(e) => {e.preventDefault(); setSelected(null)}}>
                       <ClearIcon />
                       <span>Cancel</span>
-                  </a>
-                  <a onClick={()=>{deleteItem()}}>
+                  </button>
+                  <button onClick={(e)=>{e.preventDefault(); deleteItem()}}>
                       <DeleteIcon />
                       <span>Delete</span>
-                  </a>
+                  </button>
                 </div> 
               </div>
               
