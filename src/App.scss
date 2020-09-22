@@ -649,6 +649,7 @@ h2 {
       align-items: center;
       background-color: transparent;
       border-color: transparent;
+      transition: 250ms;
 
       span{
         margin-left:5px;
@@ -656,6 +657,10 @@ h2 {
 
       &:hover{
         background: rgba(0,0,0,.08);
+      }
+      &:focus{
+        outline: none;
+        background: rgba(0,0,0,.2);
       }
     }
   }

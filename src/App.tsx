@@ -65,9 +65,10 @@ const ItemsReducer = (state: State["items"], action: ItemsActions) => {
 }
 
 const SectionsReducer = (state: State["sections"], action: SectionsActions) => {
-  
   switch (action.type){
     case "add":
+      //Make sure new ID is unique
+      //This needs to be modified because I think if a section is removed, this could create duplicate ID
       const newID = state[state.length -1] ? state[state.length -1].id + 1 : 1;
       const newSection = {...action.section, id: newID}
       let newSections = state.map((section) => { section.order = (section.order >= action.section.order) ? section.order + 1 : section.order; return section })   
@@ -121,6 +122,7 @@ function App() {
   const [sections, dispatchSections] = React.useReducer(SectionsReducer, initialSections);
   const [selectedId, setSelectedId] = React.useState(null);
 
+  //Update state for whether presence is active
   const setSelected = (id) => {
     id === null ? setOpenPresence(false) : setOpenPresence(true)
     setSelectedId(id);
@@ -145,8 +147,20 @@ function App() {
     return sections.sort((a,b) => {return a.order - b.order}).map((section, index) => {
       return (
         <div key={`section-block-${section.id}`}>
-            <SectionHeader key={`section-component-${section.id}`} section={section} numberSections={sections.length} handleIncrementSection={(section) => { dispatchSections({ type: "increment", section: section}) }} handleDecrementSection={(section) => { dispatchSections({ type: "decrement", section: section}) }} handleUpdateSectionName={(section) => { dispatchSections({ type: "updateName", section: section}) }}  />
-            <CardList items={items} setSelected={setSelected} selectedId={selectedId} sectionId={section.id}/>
+            <SectionHeader 
+              key={`section-component-${section.id}`} 
+              section={section} 
+              numberSections={sections.length} 
+              handleIncrementSection={(section) => { dispatchSections({ type: "increment", section: section}) }} 
+              handleDecrementSection={(section) => { dispatchSections({ type: "decrement", section: section}) }} 
+              handleUpdateSectionName={(section) => { dispatchSections({ type: "updateName", section: section}) }}  
+            />
+            <CardList 
+              items={items} 
+              setSelected={setSelected} 
+              selectedId={selectedId} 
+              sectionId={section.id}
+            />
         </div>
       )
     })
@@ -155,8 +169,20 @@ function App() {
   const renderFeaturedItems = (items) => {
       return (
         <div key={`section-block-featured`} className="featured-section">
-            <SectionHeader key={`section-component-featured`} section={{id: 0, name: 'Featured Menu Items', order: 0}} handleIncrementSection={() => { }} handleDecrementSection={() => { }} handleUpdateSectionName={() => { }} numberSections={sections.length} />
-            <CardList items={items} setSelected={setSelected} selectedId={selectedId} sectionId={0}/>
+            <SectionHeader 
+              key={`section-component-featured`} 
+              section={{id: 0, name: 'Featured Menu Items', order: 0}} 
+              handleIncrementSection={() => {}} 
+              handleDecrementSection={() => {}} 
+              handleUpdateSectionName={() => {}} 
+              numberSections={sections.length} 
+            />
+            <CardList 
+              items={items} 
+              setSelected={setSelected} 
+              selectedId={selectedId} 
+              sectionId={0}
+            />
         </div>
       )
   }
@@ -168,7 +194,17 @@ function App() {
         <motion.div className="grid-container" animate={ "shown" } initial={ "hidden" } variants={variants}>
           <AnimateSharedLayout type="crossfade">
             <AnimatePresence>  
-                  {selectedId && openPresence && <ItemPresence key="item" sections={sections} items={items} id={selectedId} setSelected={setSelected} handleEditItem={(item) => { dispatchItems({ type: "update", item: item}) }} handleDeleteItem={(item) => { setTimeout(()=>{dispatchItems({ type: "remove", item: item})}, 500) }} />}
+              {selectedId && openPresence && 
+                <ItemPresence 
+                  key="item" 
+                  sections={sections} 
+                  items={items} 
+                  id={selectedId} 
+                  setSelected={setSelected} 
+                  handleEditItem={(item) => { dispatchItems({ type: "update", item: item}) }} 
+                  handleDeleteItem={(item) => { setTimeout(()=>{dispatchItems({ type: "remove", item: item})}, 500) }} 
+                  />
+                }
             </AnimatePresence>
             {renderFeaturedItems(items)}
             {renderCards(items)}

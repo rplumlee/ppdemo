@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Summary
 
-This is a demo I've been working with to test out and learn the conventions of Framer v2 and get caught up with React 16. Most notably I've been interested in mastering Shared Layouts. Demo can be found at http://rplumlee.github.io 
+This is a demo I've been working with to test out and learn the conventions of Framer v2 and get caught up with React 16. Most notably I've been interested in mastering Shared Layouts. Demo can be found at http://rplumlee.github.io/ppdemo1/
 
 ## Planned Features
 
@@ -20,7 +20,7 @@ The next few things I want to do:
 - build out available toppings functionality
 - change order functionality from a property on the object to just using indices
 - ~~add featured section up top~~
-- write some tests
+- write a test suite
 - reorder menu items functionality
 - implement drag to reorder/change item section. On initial glance it looks like using Animate Presence breaks drag ability, but this may be fixed by the rerender on a drag action that actually changes the state.
 - actually add a db and upload image functionality
